@@ -78,3 +78,4 @@ Open the `target/site` folder and run the `index.html` file. You should see:
 ## Branch of isler_oliver.
 ## Branch of nguyen_phat.
 ## Branch of popov_marjan.
+## Branch of schmidt_patrick.
