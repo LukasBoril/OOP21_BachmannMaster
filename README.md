@@ -74,3 +74,4 @@ Open the `target/site` folder and run the `index.html` file. You should see:
 ## Branch of dilber_danijel.
 ## Branch of duss_nadine.
 ## Branch of gasser_matthias.
+## Branch of giger_thomas.
