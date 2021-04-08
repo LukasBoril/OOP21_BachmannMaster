@@ -54,16 +54,16 @@ Open the `target/site` folder and run the `index.html` file. You should see:
 ## Branch per student
 
 - bajrami_kaltrim
-popov_marjan
-widmer_sidney
-berchtold_thomas
-boril_lukas
-boban_pascal
-duss_nadine
-dilber_danijel
-gasser_matthias
-giger_thomas
-isler_oliver
-nguyen_phat
-schmidt_patrick
-stadelmann_daniel
+- popov_marjan
+- widmer_sidney
+- berchtold_thomas
+- boril_lukas
+- boban_pascal
+- duss_nadine
+- dilber_danijel
+- gasser_matthias
+- giger_thomas
+- isler_oliver
+- nguyen_phat
+- schmidt_patrick
+- stadelmann_daniel
