@@ -69,3 +69,4 @@ Open the `target/site` folder and run the `index.html` file. You should see:
 - stadelmann_daniel
 ## Branch of bajrami_kaltrim.
 ## Branch of berchtold_thomas.
+## Branch of boban_pascal.
