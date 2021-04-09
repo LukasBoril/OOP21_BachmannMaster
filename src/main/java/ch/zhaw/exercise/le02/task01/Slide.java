@@ -1,34 +1,35 @@
 package ch.zhaw.exercise.le02.task01;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class Slide extends Application {
-	@Override
-	public void start(Stage stage) {
-		Label label = new Label();
-		Slider slider = new Slider(10, 100, 42.195);
-		slider.setShowTickMarks(true);
-		slider.setShowTickLabels(true);
-		slider.setMajorTickUnit(10);
-		slider.setBlockIncrement(10);
 
-		// label.textProperty().bind(Bindings.format("%.2f", slider.valueProperty()));
-		slider.rotateProperty().bind(slider.valueProperty());
+    @Override
+    public void start(Stage stage){
+        Label label = new Label();
+        Slider slider = new Slider(1, 11, 5);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setMajorTickUnit(1);
+        slider.setBlockIncrement(1);
 
-		VBox layout = new VBox(10, label, slider);
-		layout.setStyle("-fx-padding: 10px; -fx-alignment: baseline-right");
+        label.textProperty().bind(Bindings.format("%.2f", slider.valueProperty()));
 
-		stage.setScene(new Scene(layout, 300, 100));
-		stage.setTitle("Slider Example");
-		stage.show();
-	}
+        VBox layout = new VBox(10, label, slider);
+        layout.setStyle("-fx-padding: 10px; -fx-alignment: baseline-right");
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+        stage.setScene(new Scene(layout, 300, 100));
+        stage.setTitle("Slider");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
