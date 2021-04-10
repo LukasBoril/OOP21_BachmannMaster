@@ -1,4 +1,4 @@
-package ch.zhaw.excersice.le01.task2HelloWorld;
+package ch.zhaw.homework.le01.task2HelloWorld;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,5 +20,6 @@ public class Helloworld extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) { launch(args); } // Test
+    public static void main(String[] args) {
+        launch(args); } // Test
 }
