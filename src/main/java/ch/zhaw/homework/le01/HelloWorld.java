@@ -1,15 +1,21 @@
 package ch.zhaw.homework.le01;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class HelloWorld extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     public void start(Stage primaryStage) {
         Label l1 = new Label("Hallo");
         Label l2 = new Label("Welt");
@@ -40,7 +46,8 @@ public class HelloWorld extends Application {
         AnchorPane.setTopAnchor(l2,30.0);*/
 
         root.getChildren().addAll(l1,l2,l3,l4,l5,l6);
-
+        root.getChildren().add(createButton("HelloWorld"));
+        root.getChildren().add(createButton("MyNewButton"));
 
         Scene scene = new Scene(root, 240,40);
         primaryStage.setScene(scene);
@@ -50,8 +57,24 @@ public class HelloWorld extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public Pane createButton(String buttonText) {
+        final Button btn = new Button();
+        btn.setText("Add '"+ buttonText + "'");
+
+        final FlowPane pane = new FlowPane();
+        pane.setPadding(new Insets(7));
+        pane.getChildren().add(btn);
+
+        EventHandler<ActionEvent> btnEvent = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().add(new Label(buttonText));
+            }
+        };
+
+        btn.setOnAction(btnEvent);
+
+        return pane;
     }
 
 
