@@ -67,12 +67,4 @@ Open the `target/site` folder and run the `index.html` file. You should see:
 - nguyen_phat
 - schmidt_patrick
 - stadelmann_daniel
-## Branch of bajrami_kaltrim.
-## Branch of berchtold_thomas.
-## Branch of boban_pascal.
-## Branch of boril_lukas.
-## Branch of dilber_danijel.
-## Branch of duss_nadine.
-## Branch of gasser_matthias.
-## Branch of giger_thomas.
-## Branch of isler_oliver.
+## Branch of tal_michael.
