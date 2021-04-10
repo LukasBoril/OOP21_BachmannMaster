@@ -58,6 +58,7 @@ public class HelloWorld extends Application {
     }
 
     public Pane createButton(String buttonText) {
+
         final Button btn = new Button();
         btn.setText("Add '"+ buttonText + "'");
 
@@ -66,12 +67,18 @@ public class HelloWorld extends Application {
         pane.getChildren().add(btn);
 
         EventHandler<ActionEvent> btnEvent = new EventHandler<ActionEvent>() {
+            private int numberPress = 0;
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().add(new Label(buttonText));
+                if  (numberPress < 10) {
+                    pane.getChildren().add(new Label(buttonText));
+                    incrNumberPress();
+                }
+            }
+            public void incrNumberPress() {
+                numberPress ++;
             }
         };
-
         btn.setOnAction(btnEvent);
 
         return pane;
