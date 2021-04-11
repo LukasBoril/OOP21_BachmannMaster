@@ -36,7 +36,7 @@ public class MainView {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 600, 400);
 
-        personTableView = initTableData();
+        personTableView = initTableWithData();
         root.setTop(initMenu());
         VBox vBox = new VBox(initToolBar(), personTableView);
         VBox.setVgrow(personTableView, Priority.ALWAYS);
@@ -150,7 +150,7 @@ public class MainView {
     }
 
 
-    private PersonTableView initTableData() {
+    private PersonTableView initTableWithData() {
         PersonTableView table = new PersonTableView();
         table.add(new Person("Buggs", "Bunny", 79));
         table.add(new Person("Daffy", "Duck", 83));
