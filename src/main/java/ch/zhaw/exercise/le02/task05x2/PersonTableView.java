@@ -7,10 +7,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -58,9 +59,14 @@ public class PersonTableView extends VBox {
         ageColumn.setStyle( "-fx-alignment: CENTER;");
         ageColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         ageColumn.setOnEditCommit(event -> {
-                Person person = event.getRowValue();
-                person.setAge(event.getNewValue());
-        });
+                if (event.getNewValue() != null && isNumeric(event.getNewValue().toString())) {
+                    Person person = event.getRowValue();
+                    person.setAge(event.getNewValue());
+                } else {
+                    showErrorDialog("Your entry is not correct (use only numbers)");
+                    refresh();
+                }
+       });
 
         table.getColumns().add(firstNameColumn);
         table.getColumns().add(lastNameColumn);
@@ -69,14 +75,24 @@ public class PersonTableView extends VBox {
 
         table.setRowFactory(tableView -> {
             final TableRow<Person> row = new TableRow<>();
-            Person selectedPerson = table.getSelectionModel().selectedItemProperty().getValue();
             // create a context menu on non empty rows
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu)null)
-                            .otherwise(createContextMenu(selectedPerson) )
+                            .otherwise(createContextMenu() )
             );
             return row ;
+        });
+
+        table.setOnKeyPressed(event -> {
+            if (event.getCode() != null && (event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE)) {
+                Person selectedPerson = table.getSelectionModel().selectedItemProperty().getValue();
+                if (selectedPerson == null) {
+                    showErrorDialog("Please select a row!");
+                } else {
+                    onDeleteAction.firePropertyChange( "delete", null, selectedPerson);
+                }
+            }
         });
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -84,7 +100,7 @@ public class PersonTableView extends VBox {
         getChildren().add(table);
     }
 
-    private ContextMenu createContextMenu(Person selectedPerson) {
+    private ContextMenu createContextMenu() {
         ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("delete.png")));
         ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("edit.png")));
 
@@ -92,16 +108,20 @@ public class PersonTableView extends VBox {
 
         MenuItem delete = new MenuItem("Delete");
         delete.setGraphic(deleteIcon);
-        delete.setOnAction(event -> onDeleteAction.firePropertyChange( "delete", selectedPerson, selectedPerson ));
+        delete.setOnAction(event -> {
+            Person selectedPerson = table.getSelectionModel().selectedItemProperty().getValue();
+            onDeleteAction.firePropertyChange( "delete", null, selectedPerson);
+        });
 
         MenuItem edit = new MenuItem("Edit");
         edit.setGraphic(editIcon);
-        edit.setOnAction(event -> onEditAction.firePropertyChange( "edit", selectedPerson, selectedPerson ));
-
+        edit.setOnAction(event -> {
+            Person selectedPerson = table.getSelectionModel().selectedItemProperty().getValue();
+            onEditAction.firePropertyChange( "edit", null, selectedPerson);
+        });
         contextMenu.getItems().addAll(delete, edit);
         return contextMenu;
     }
-
 
     /**
      * Add a person to the table
@@ -119,22 +139,16 @@ public class PersonTableView extends VBox {
         if (confirmDelete(selectedPerson)) {
             table.getItems().remove(selectedPerson);
         }
-
     }
 
+    /**
+     * Remove a row with a person
+     * @param person the person to remove
+     */
     public void removeRow(Person person) {
         if (confirmDelete(person)) {
             table.getItems().remove(person);
         }
-    }
-
-
-    /**
-     * Get the selected Person
-     * @return the selected person in the table
-     */
-    public ReadOnlyObjectProperty<Person> getSelectedItemProperty () {
-        return table.getSelectionModel().selectedItemProperty();
     }
 
     private boolean confirmDelete(Person selectedPerson) {
@@ -146,6 +160,14 @@ public class PersonTableView extends VBox {
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.filter(buttonType -> buttonType == ButtonType.OK).isPresent();
+    }
+
+    /**
+     * Get the selected Person
+     * @return the selected person in the table
+     */
+    public ReadOnlyObjectProperty<Person> getSelectedItemProperty () {
+        return table.getSelectionModel().selectedItemProperty();
     }
 
     /**
@@ -176,7 +198,7 @@ public class PersonTableView extends VBox {
      */
     private void addButtonsToTable() {
         TableColumn<Person, Void> actionColumn = new TableColumn<>("Action");
-        Callback<TableColumn<Person, Void>, TableCell<Person, Void>> cellFactory = this::getActionTableCell;
+        Callback<TableColumn<Person, Void>, TableCell<Person, Void>> cellFactory = this::getActionButtonTableCell;
         actionColumn.setCellFactory(cellFactory);
         table.getColumns().add(actionColumn);
     }
@@ -186,17 +208,29 @@ public class PersonTableView extends VBox {
      * @param param current cell
      * @return a table cell with buttons
      */
-    private TableCell<Person, Void> getActionTableCell(TableColumn<Person, Void> param) {
+    private TableCell<Person, Void> getActionButtonTableCell(TableColumn<Person, Void> param) {
         return new TableCell<Person, Void>() {
 
             private final Button deleteButton;
+            private final Button editButton;
 
             {
                 deleteButton = new Button("");
-                ImageView btnIcon = new ImageView(new Image(getClass().getResourceAsStream("delete.png")));
-                deleteButton.setGraphic(btnIcon);
+                ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("delete.png")));
+                deleteButton.setGraphic(deleteIcon);
                 deleteButton.setOnAction(event -> {
-                    removeRow(getTableView().getItems().get(getIndex()));
+                    Person selectedPerson = getTableView().getItems().get(getIndex());
+                    onDeleteAction.firePropertyChange( "delete", null, selectedPerson);
+                });
+
+                editButton = new Button("");
+                ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("edit.png")));
+                editIcon.setFitHeight(16);
+                editIcon.setFitWidth(16);
+                editButton.setGraphic(editIcon);
+                editButton.setOnAction(event -> {
+                    Person selectedPerson = getTableView().getItems().get(getIndex());
+                    onEditAction.firePropertyChange( "edit", null, selectedPerson);
                 });
             }
 
@@ -206,10 +240,35 @@ public class PersonTableView extends VBox {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(deleteButton);
+
+                    setGraphic(new HBox(deleteButton, editButton));
                 }
             }
         };
+    }
+
+    private static boolean isNumeric(String string) {
+
+        if(string == null || string.equals("")) {
+            System.out.println("String cannot be parsed, it is null or empty.");
+            return false;
+        }
+
+        try {
+            int intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Input String cannot be parsed to Integer.");
+        }
+        return false;
+    }
+
+    private void showErrorDialog (String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText(message);
+
+        alert.showAndWait();
     }
 
 }

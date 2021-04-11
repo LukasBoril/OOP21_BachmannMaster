@@ -73,8 +73,10 @@ public class PersonEditDialog extends Dialog<Person> {
         age.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 age.setText(newValue.replaceAll("[^\\d]", ""));
+                saveButton.setDisable(true);
+            } else {
+                saveButton.setDisable(newValue.trim().isEmpty() || firstName.getText().trim().isEmpty() || lastName.getText().trim().isEmpty());
             }
-            saveButton.setDisable(newValue.trim().isEmpty() || firstName.getText().trim().isEmpty() || lastName.getText().trim().isEmpty());
         });
 
         getDialogPane().setContent(grid);

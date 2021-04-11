@@ -42,13 +42,20 @@ public class MainView {
         VBox.setVgrow(personTableView, Priority.ALWAYS);
         root.setCenter(vBox);
 
-        personTableView.addOnDeleteListener(e -> deletePerson());
-        personTableView.addOnEditListener(e -> editPerson());
+        personTableView.addOnDeleteListener(e -> {
+            Person person = (Person) e.getNewValue();
+            deletePerson(person);
+        });
+        personTableView.addOnEditListener(e -> {
+            Person person = (Person) e.getNewValue();
+            editPerson(person);
+        });
 
         // Accelerators are working on the whole the scene where ever the keyboard focus is
         // Alternative in tableView.setOnKeyPressed() ... works only if the focus is on the table
-        scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.DELETE)), this::deletePerson);
-        scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.BACK_SPACE)), this::deletePerson);
+        // scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.DELETE)), this::deletePerson);
+        // scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.BACK_SPACE)), this::deletePerson);
+        scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.F6)), this::editPerson);
 
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         primaryStage.setTitle("TableView Demo");
@@ -113,19 +120,21 @@ public class MainView {
         });
     }
 
-
     private void editPerson() {
-        PersonEditDialog dialog = new PersonEditDialog(personTableView.getSelectedItemProperty().getValue());
+        editPerson(personTableView.getSelectedItemProperty().getValue());
+    }
+    private void editPerson(Person existingPerson) {
+        PersonEditDialog dialog = new PersonEditDialog(existingPerson);
         Optional<Person> person = dialog.showAndWait();
 
         person.ifPresent(theEditedPerson -> {
             System.out.println("Last Name=" + theEditedPerson.getFirstName() +
                     ", FirstName=" + theEditedPerson.getLastName() +
                     ", Age=" + theEditedPerson.getAge());
-            Person selectedPerson = personTableView.getSelectedItemProperty().getValue();
-            selectedPerson.setFirstName(theEditedPerson.getFirstName());
-            selectedPerson.setLastName(theEditedPerson.getLastName());
-            selectedPerson.setAge(theEditedPerson.getAge());
+            // Person selectedPerson = personTableView.getSelectedItemProperty().getValue();
+            existingPerson.setFirstName(theEditedPerson.getFirstName());
+            existingPerson.setLastName(theEditedPerson.getLastName());
+            existingPerson.setAge(theEditedPerson.getAge());
             personTableView.refresh();
         });
     }
@@ -134,8 +143,12 @@ public class MainView {
         if (personTableView.getSelectedItemProperty() != null && personTableView.getSelectedItemProperty().getValue() != null) {
             personTableView.removeSelectedRow();
         }
-
     }
+
+    private void deletePerson(Person person) {
+            personTableView.removeRow(person);
+    }
+
 
     private PersonTableView initTableData() {
         PersonTableView table = new PersonTableView();
