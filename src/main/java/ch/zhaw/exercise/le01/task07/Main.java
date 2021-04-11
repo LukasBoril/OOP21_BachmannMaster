@@ -22,7 +22,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root, 460, 180);
         // Load CSS
-        scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
+        // scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
         stage.setScene(scene);
 
         stage.setTitle("FXML Demo");
