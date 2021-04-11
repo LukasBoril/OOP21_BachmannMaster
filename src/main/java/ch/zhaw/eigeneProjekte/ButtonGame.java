@@ -1,20 +1,33 @@
 package ch.zhaw.eigeneProjekte;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * THis Game creats a a screen with one button that are to be pressed. If it gets pressed a new button gets randomly displayd
  */
 public class ButtonGame extends Application {
     private static final int NUMBERBUTTONSLINE = 3;
-    private static final int NUMBERBUTTONSCOLUMN = 3;
+    private static final int NUMBERBUTTONSCOLUMN = 4;
+    private static final int BUTTONSIZE = 80;
+    private static final int BUTTONSPACE = 20;
+    private static final boolean SHOWALLBUTTONS = true; //just for development
+    private TilePane buttonPane;
 
     public ButtonGame(){
+        buttonPane = new TilePane();
     }
 
     public static void main(String[] args) {
@@ -22,15 +35,65 @@ public class ButtonGame extends Application {
     }
 
     public void start(Stage primaryStage) {
-        HBox buttonPaneLine = new HBox();
+        //create the Pane
+        //TilePane buttonPane = new TilePane();
+        buttonPane.setTileAlignment(Pos.TOP_LEFT);
+        buttonPane.setPrefColumns(NUMBERBUTTONSLINE);
+        buttonPane.setPrefRows(NUMBERBUTTONSCOLUMN);
+        buttonPane.setVgap(20);
+        buttonPane.setHgap(20);
+        buttonPane.setLayoutX(20);
+        buttonPane.setLayoutY(20);
 
-        for (int line = 0; line< NUMBERBUTTONSLINE; line++) {
-            buttonPaneLine.getChildren().add(createButton(line,1));
+        //create the number of choosen Buttons and add it to the Pane
+        for (int line = 0; line < NUMBERBUTTONSLINE; line++) {
+            for (int column = 0; column < NUMBERBUTTONSCOLUMN; column++) {
+                buttonPane.getChildren().add(createButton(line, column));
+            }
         }
+
+        //create the Scene
+        int sceneWidth = (NUMBERBUTTONSLINE * (BUTTONSIZE + BUTTONSPACE)) + BUTTONSPACE;
+        int sceneHeight = (NUMBERBUTTONSCOLUMN * (BUTTONSIZE + BUTTONSPACE)) + BUTTONSPACE;
+        Scene scene = new Scene(buttonPane, sceneWidth,sceneHeight);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Button Press Game");
+        primaryStage.show();
     }
 
-    public void createButton(int line, int column) {
+    /**
+     * Methode creates a Button and names it with its number 1 to n
+     * @return Button
+     */
+    public Button createButton(int line, int column) {
+        String stLine = new Integer(line+column+1).toString();
+
         final Button btn = new Button();
-        btn.setText((String) line);
+        btn.setText(stLine);
+        btn.setPrefSize(BUTTONSIZE,BUTTONSIZE);
+
+        //display first button or all Buttons
+        btn.setVisible(SHOWALLBUTTONS || (line == 1 && column == 1));
+
+        EventHandler<ActionEvent> btnEvent = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showNextButton();
+                //display first button or all Buttons
+                btn.setVisible(false);
+            }
+        };
+        btn.setOnAction(btnEvent);
+
+        return btn;
+    }
+
+    public void showNextButton() {
+        Random random = new Random();
+
+        Button btn = (Button) buttonPane.getChildren().get(random.nextInt(NUMBERBUTTONSLINE * NUMBERBUTTONSCOLUMN));
+        btn.setVisible(true);
+
+
     }
 }
