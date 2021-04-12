@@ -52,9 +52,6 @@ public class MainView {
         });
 
         // Accelerators are working on the whole the scene where ever the keyboard focus is
-        // Alternative in tableView.setOnKeyPressed() ... works only if the focus is on the table
-        // scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.DELETE)), this::deletePerson);
-        // scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.BACK_SPACE)), this::deletePerson);
         scene.getAccelerators().put(KeyCombination.keyCombination(String.valueOf(KeyCode.F6)), this::editPerson);
 
         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
