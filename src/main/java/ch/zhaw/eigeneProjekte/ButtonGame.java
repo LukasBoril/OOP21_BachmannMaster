@@ -23,7 +23,7 @@ public class ButtonGame extends Application {
     private static final int NUMBERBUTTONSCOLUMN = 4;
     private static final int BUTTONSIZE = 80;
     private static final int BUTTONSPACE = 20;
-    private static final boolean SHOWALLBUTTONS = true; //just for development
+    private static final boolean SHOWALLBUTTONS = false; //just for development
     private TilePane buttonPane;
 
     public ButtonGame(){
@@ -46,9 +46,11 @@ public class ButtonGame extends Application {
         buttonPane.setLayoutY(20);
 
         //create the number of choosen Buttons and add it to the Pane
+        int buttonNo = 1;
         for (int line = 0; line < NUMBERBUTTONSLINE; line++) {
             for (int column = 0; column < NUMBERBUTTONSCOLUMN; column++) {
-                buttonPane.getChildren().add(createButton(line, column));
+                buttonPane.getChildren().add(createButton(line, column, buttonNo));
+                buttonNo++;
             }
         }
 
@@ -65,15 +67,15 @@ public class ButtonGame extends Application {
      * Methode creates a Button and names it with its number 1 to n
      * @return Button
      */
-    public Button createButton(int line, int column) {
-        String stLine = new Integer(line+column+1).toString();
+    public Button createButton(int line, int column, int buttonNo) {
+        String stButtonNo = new Integer(buttonNo).toString();
 
         final Button btn = new Button();
-        btn.setText(stLine);
+        btn.setText(stButtonNo);
         btn.setPrefSize(BUTTONSIZE,BUTTONSIZE);
 
         //display first button or all Buttons
-        btn.setVisible(SHOWALLBUTTONS || (line == 1 && column == 1));
+        btn.setVisible(SHOWALLBUTTONS || (line == 0 && column == 0));
 
         EventHandler<ActionEvent> btnEvent = new EventHandler<ActionEvent>() {
             @Override
@@ -90,8 +92,11 @@ public class ButtonGame extends Application {
 
     public void showNextButton() {
         Random random = new Random();
+        int nextRandomNo = -1;
 
-        Button btn = (Button) buttonPane.getChildren().get(random.nextInt(NUMBERBUTTONSLINE * NUMBERBUTTONSCOLUMN));
+        nextRandomNo = random.nextInt(NUMBERBUTTONSLINE * NUMBERBUTTONSCOLUMN);
+
+        Button btn = (Button) buttonPane.getChildren().get(nextRandomNo);
         btn.setVisible(true);
 
 

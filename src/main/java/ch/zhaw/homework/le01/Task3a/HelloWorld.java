@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le01;
+package ch.zhaw.homework.le01.Task3a;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -66,7 +66,8 @@ public class HelloWorld extends Application {
         pane.setPadding(new Insets(7));
         pane.getChildren().add(btn);
 
-        EventHandler<ActionEvent> btnEvent = new EventHandler<ActionEvent>() {
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
             private int numberPress = 0;
             @Override
             public void handle(ActionEvent event) {
@@ -78,8 +79,7 @@ public class HelloWorld extends Application {
             public void incrNumberPress() {
                 numberPress ++;
             }
-        };
-        btn.setOnAction(btnEvent);
+        });
 
         return pane;
     }
