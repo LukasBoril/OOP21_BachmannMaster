@@ -73,4 +73,7 @@ public class DialogLayout extends Application {
         return gridPane;
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
