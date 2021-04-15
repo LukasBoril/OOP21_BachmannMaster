@@ -18,7 +18,7 @@ public class HelloBo extends Application {
         primaryStage.setTitle("Hello user");
         primaryStage.show();
     }
-    public static void main(String[] args) {
+   public static void main(String[] args) {
         launch(args);
     }
 }
