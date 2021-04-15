@@ -23,7 +23,7 @@ public class ComboBoxExercise extends Application {
             comboNames.show();
         });
         HBox hbox = new HBox(comboNames, addNamesBtn);
-        Scene scene = new Scene(hbox, 200, 120);
+        Scene scene = new Scene(hbox, 500, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

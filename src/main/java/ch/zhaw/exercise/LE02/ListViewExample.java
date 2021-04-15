@@ -21,13 +21,16 @@ public class ListViewExample extends Application {
         final ObservableList<String> entries = FXCollections.observableArrayList (names);
         final ListView<String> listView = new ListView<>(entries);
         final SelectionModel<String> selectionModel = listView.getSelectionModel();
+
         Button readButton = new Button("Read Selected Value");
         Button addButton = new Button("Add");
         TextField textField = new TextField();
         Button removeButton = new Button("Remove");
+
         HBox hbox = new HBox(addButton, textField, removeButton);
-        removeButton.disableProperty().bind(
-                Bindings.isNull(selectionModel.selectedItemProperty()));
+
+        removeButton.disableProperty().bind(Bindings.isNull(selectionModel.selectedItemProperty()));
+
         addButton.setOnAction(evt -> {
             entries.add(textField.getText());
         });
@@ -35,15 +38,18 @@ public class ListViewExample extends Application {
                 selectionModel.selectedItemProperty().getValue());
         });
         removeButton.setOnAction(event -> {
-            String selectedValue = selectionModel.selectedItemProperty(). getValue();
-            entries.remove(selectedValue);
+                    String selectedValue = selectionModel.selectedItemProperty().getValue();
+                    entries.remove(selectedValue);
+
+                });
             VBox vBox = new VBox(hbox, listView, readButton);
             Scene scene = new Scene(vBox, 300, 280);
             primaryStage.setScene(scene);
             primaryStage.show();
-            });
+
     }
     public static void main(String[] args) {
+
         Application.launch(args);
     }
 }
