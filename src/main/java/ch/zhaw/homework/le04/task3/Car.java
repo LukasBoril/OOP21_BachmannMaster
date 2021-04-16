@@ -14,7 +14,6 @@ public class Car extends Vehicle implements Serializable {
     public Car(String color, Engine engine) {
         this.color = color;
         this.engine = engine;
-
     }
 
     public Engine getEngine() {

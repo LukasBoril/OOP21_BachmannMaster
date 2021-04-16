@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 public class Vehicle implements Serializable {
 
-    private static final long serialVersionUID = 5929482525477575331L;
-
-    public Vehicle() {
-
-    }
+    private static final long serialVersionUID = 8574829967951488322L;
 
     private String number;
 
