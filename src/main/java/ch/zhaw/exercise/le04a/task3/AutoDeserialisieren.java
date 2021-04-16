@@ -15,7 +15,7 @@ public class AutoDeserialisieren {
 
             System.out.println("Farbe: " + auto.getFarbe());
             System.out.println("Hubraum: " + auto.getMotor().getHubraum());
-//            System.out.println("Baujahr: " + auto.getBaujahr());
+            System.out.println("Nummer: " + auto.getNummer());
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
