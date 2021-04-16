@@ -1,8 +1,5 @@
 package ch.zhaw.exercise.le03b.task5;
 
-
-
-
 import javax.sound.midi.*;
 
 
