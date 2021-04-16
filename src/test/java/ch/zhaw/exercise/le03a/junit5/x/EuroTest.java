@@ -1,4 +1,5 @@
-package ch.zhaw.example.junit.junit5.x;
+package ch.zhaw.exercise.le03a.junit5.x;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
