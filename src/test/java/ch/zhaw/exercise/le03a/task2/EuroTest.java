@@ -15,13 +15,4 @@ public class EuroTest extends TestCase {
                 two.getAmount()
         );
     }
-
-    public void testInvalid() throws Exception {
-        try {
-            two.add(new Euro(-2.0));
-            fail("IllegalArgumentException expected!");
-        }
-        catch (IllegalArgumentException ex) {
-        }
-    }
 }

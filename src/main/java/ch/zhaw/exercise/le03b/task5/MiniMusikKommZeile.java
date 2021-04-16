@@ -6,7 +6,7 @@ package ch.zhaw.exercise.le03b.task5;
 import javax.sound.midi.*;
 
 
-public class MiniMusikKommZeile {  // unsere zweite Version
+public class MiniMusikKommZeile {  // in args 1 45
 
 	public static void main(String[] args) {
 		MiniMusikKommZeile mini = new MiniMusikKommZeile();
