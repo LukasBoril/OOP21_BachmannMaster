@@ -1,4 +1,4 @@
-package ch.zhaw.example.junit.junit5.x;
+package ch.zhaw.example.le03a.junit3.x;
 
 public class Euro {
 	private double amount;
