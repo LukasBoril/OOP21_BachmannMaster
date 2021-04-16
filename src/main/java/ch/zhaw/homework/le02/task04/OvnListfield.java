@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le04;
+package ch.zhaw.homework.le02.task04;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;

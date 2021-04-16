@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le05;
+package ch.zhaw.homework.le02.task05;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
