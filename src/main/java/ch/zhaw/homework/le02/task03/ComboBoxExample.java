@@ -28,6 +28,6 @@ public class ComboBoxExample extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 }
