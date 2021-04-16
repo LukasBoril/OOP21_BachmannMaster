@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le01.task3;
+package ch.zhaw.homework.le01.WissenssicherungTeil1;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
