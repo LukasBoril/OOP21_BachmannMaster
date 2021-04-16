@@ -1,3 +1,4 @@
+/*
 package ch.zhaw.example.junit.junit5.x;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,3 +34,4 @@ public class EuroTest {
 
 	}
 }
+*/

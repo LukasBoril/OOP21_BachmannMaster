@@ -20,6 +20,7 @@ public class Entscheidungsknopf extends Application {
     Stage fenster;
     Scene szene1, szene2;
     Button button1, button2;
+    private Random r = new Random();
     //Label label1, label2;
 
     @Override
@@ -59,7 +60,6 @@ public class Entscheidungsknopf extends Application {
 
 
     public String generateRandomAnswer(){
-        Random r = new Random();
         return answers[r.nextInt(answers.length)];
     }
 
