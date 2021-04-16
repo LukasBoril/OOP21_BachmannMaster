@@ -1,4 +1,4 @@
-package ch.zhaw.exercise.le03a.junit5.x;
+package ch.zhaw.exercise.le03a.task5.junit5.x;
 
 
 import org.apache.logging.log4j.LogManager;

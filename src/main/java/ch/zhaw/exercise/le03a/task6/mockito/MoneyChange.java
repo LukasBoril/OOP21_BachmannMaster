@@ -1,4 +1,4 @@
-package ch.zhaw.exercise.le03a.mockito;
+package ch.zhaw.exercise.le03a.task6.mockito;
 
 
 public class MoneyChange {
