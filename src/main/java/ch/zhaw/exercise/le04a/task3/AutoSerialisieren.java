@@ -10,6 +10,7 @@ public class AutoSerialisieren {
 
     public static void main(String[] args) {
         Auto a1 = new Auto("blue", new Motor(2000));
+        a1.setNummer("SG 213");
 
         try(OutputStream fos = new FileOutputStream("src/auto.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
