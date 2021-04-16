@@ -1,5 +1,6 @@
 package ch.zhaw.homework.le02;
 
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,7 +26,7 @@ import java.util.Random;
  * Entscheidungsknopf mit Eingabe was zu tun wäre
  */
 
-public class Entscheidungsknopf2 extends Application {
+public class EntscheidungsKnopf2 extends Application {
 
     private ArrayList<String> values;
     private final Random random = new Random();
