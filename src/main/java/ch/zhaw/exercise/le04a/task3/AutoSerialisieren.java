@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 
+
 public class AutoSerialisieren {
 
     public static void main(String[] args) {
