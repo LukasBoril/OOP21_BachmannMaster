@@ -30,6 +30,5 @@ public class EuroTest {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			two.add(new Euro(-2.0));
 		});
-
 	}
 }
