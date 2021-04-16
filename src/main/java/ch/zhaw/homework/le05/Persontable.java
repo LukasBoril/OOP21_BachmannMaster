@@ -25,6 +25,7 @@ public class Persontable extends Application {
 
         TableView<Person> table = new TableView<>(data);
         table.setEditable(true);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); //Damit werden nur 3 Spalten angezeigt
 
         Label titleLabel = new Label("AddressBook");
         titleLabel.setFont(new Font("Arial", 20));
@@ -42,6 +43,7 @@ public class Persontable extends Application {
         //third Column
         TableColumn<Person, String> eMailColumn = new TableColumn<>("Email adress");
         eMailColumn.setMinWidth(200);
+        eMailColumn.setResizable(true);
         eMailColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("eMail"));
 
         table.setItems(data);
