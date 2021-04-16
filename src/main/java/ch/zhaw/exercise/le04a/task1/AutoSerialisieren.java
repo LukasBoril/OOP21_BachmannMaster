@@ -6,12 +6,14 @@ public class AutoSerialisieren {
     public static void main(String[] args) {
         Auto a2;
         Auto a1 = new Auto(new Motor(200), "Orange");
+        a1.setNummer("ZH 407 384");
 
         serialize(a1);
 
         a2 = unsserialize();
-        System.out.println("farbe: " + a2.getFarbe());
-        System.out.println("hubraum: " + a2.getMotor());
+        System.out.println("Farbe: " + a2.getFarbe());
+        System.out.println("Hubraum: " + a2.getMotor());
+        System.out.println("Nummernschild: " + a2.getNummer());
 
 
         }
@@ -21,6 +23,9 @@ public class AutoSerialisieren {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(auto);
+            System.out.println("Object serialisiert!");
+            System.out.println("----------------------");
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,6 +35,8 @@ public class AutoSerialisieren {
         try (InputStream fis = new FileInputStream("src/auto.ser")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
+            System.out.println("Object deserialisiert:");
+            System.out.println("----------------------");
             return (Auto) ois.readObject();
 
         } catch (IOException e) {

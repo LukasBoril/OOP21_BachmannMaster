@@ -2,8 +2,8 @@ package ch.zhaw.exercise.le04a.task1;
 
 import java.io.Serializable;
 
-public class Auto implements Serializable {
-    private static final long serialVersionID = 1L;
+public class Auto extends Fahrzeug implements Serializable {
+    private static final long serialVersionID = 3L;
 
     private Motor motor;
     private String farbe;
