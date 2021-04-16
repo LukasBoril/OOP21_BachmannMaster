@@ -1,8 +1,6 @@
-package ch.zhaw.homework.le02.task01;
+package ch.zhaw.exercise.le02.task01;
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
