@@ -48,6 +48,7 @@ public class OvnListfield extends Application {
             }
         });
 
+
         btnRemove.disableProperty().bind(
                 Bindings.isNull(selectedModul.selectedItemProperty()));
         btnRemove.setOnAction(event -> {
