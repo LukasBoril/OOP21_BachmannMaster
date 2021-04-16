@@ -14,4 +14,12 @@ public class Car implements Serializable {
         this.engine = engine;
 
     }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public String getColor() {
+        return color;
+    }
 }

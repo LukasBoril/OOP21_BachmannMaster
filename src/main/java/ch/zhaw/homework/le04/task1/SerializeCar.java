@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-public class Main {
+public class SerializeCar {
 
     public static void main(String[] args) {
 

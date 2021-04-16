@@ -9,7 +9,6 @@ public class Engine implements Serializable {
 
     public Engine(int capacity) {
         this.capacity = capacity;
-
     }
 
     public int getCapacity() {
