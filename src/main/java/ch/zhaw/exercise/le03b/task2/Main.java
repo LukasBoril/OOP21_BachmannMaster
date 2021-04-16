@@ -10,7 +10,7 @@ public class Main {
 
 	public Main() throws Exc1 {
 		try{
-			int x=1;
+			int x=4;
 			new A(x);
 		} catch (Exc1 e){
 			System.out.print("Main\n");
