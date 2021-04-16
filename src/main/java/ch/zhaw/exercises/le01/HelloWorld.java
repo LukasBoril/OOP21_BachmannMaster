@@ -35,6 +35,7 @@ public class HelloWorld extends Application {
         final FlowPane pane = new FlowPane();
         pane.setPadding(new Insets(7, 7, 7, 7));
         pane.getChildren().add(btn);
+
 // ActionHandler registrieren
         btn.setOnAction(event -> pane.getChildren().add(new Label("- Hello World! -")));
 
