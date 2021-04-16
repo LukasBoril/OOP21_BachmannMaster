@@ -1,4 +1,4 @@
-package ch.zhaw.exercise.le03b.task3;
+/*package ch.zhaw.exercise.le03b.task3;
 
 import ch.zhaw.example.le03b.telefonbuch.NotValidEntryException;
 import ch.zhaw.example.le03b.telefonbuch.Telefonbuch;
@@ -40,4 +40,4 @@ public class TelefonbuchTest {
 		t = null;
 	}
 
-}
+}*/
