@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le03b;
+package ch.zhaw.homework.le04;
 
 import java.io.Serializable;
 
