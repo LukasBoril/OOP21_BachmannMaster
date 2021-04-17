@@ -2,7 +2,7 @@ package ch.zhaw.exercise.le04.task01;
 
 import ch.zhaw.exercise.le04.task03.Vehicle;
 
-public class Car extends Vehicle {
+public class Car extends Vehicle{
 
     private String colour;
     private Motor motor;
