@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le02;
+package ch.zhaw.homework.le02.WissenssicherungL02;
 
 
 import javafx.application.Application;
@@ -26,7 +26,7 @@ import java.util.Random;
  * Entscheidungsknopf mit Eingabe was zu tun wäre
  */
 
-public class EntscheidungsKnopf2 extends Application {
+public class bacn_EntscheidungsKnopf2 extends Application {
 
     private ArrayList<String> values;
     private final Random random = new Random();
@@ -104,9 +104,14 @@ public class EntscheidungsKnopf2 extends Application {
     private Pane createCenterPane() {
         Button button = new Button("Klick mich");
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
         button.setOnAction(event -> {
-            if (values.isEmpty()) displayAlert("Noch keine 'Was tun?' Einträge");
-            else button.setText(this.getRandomText());
+            if (values.isEmpty()) {
+                displayAlert("Noch keine 'Was tun?' Einträge");
+            }
+            else {
+                button.setText(this.getRandomText());
+            }
         });
 
         Rectangle rectLeft = new Rectangle(30, 20);

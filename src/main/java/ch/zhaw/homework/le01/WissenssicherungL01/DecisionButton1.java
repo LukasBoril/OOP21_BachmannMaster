@@ -69,22 +69,11 @@ public class DecisionButton1 extends Application {
 
         HBox centreBox = new HBox();
         Pane button = new Pane(createButton());
-        //centreBox.setAlignment(Pos.CENTER);
         button.setPadding(new Insets(20, 0, 20, 0));
         centreBox.getChildren().add(button);
 
         return centreBox;
     }
-
-    /*private Node createLeftPane() {
-
-        Label emptyL = new Label();  //just an empty box
-
-        HBox leftBox = new HBox(emptyL);
-        leftBox.setAlignment(Pos.CENTER);
-
-        return leftBox;
-    }*/
 
     private Node createBottomPane() {
 
