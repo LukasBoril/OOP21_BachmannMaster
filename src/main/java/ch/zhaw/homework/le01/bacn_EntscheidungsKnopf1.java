@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class EntscheidungsKnopf1 extends Application {
+public class bacn_EntscheidungsKnopf1 extends Application {
 
     private ArrayList<String> values;
     private Random random = new Random();
