@@ -1,4 +1,4 @@
-package ch.zhaw.exercise.le03b.task4;
+package ch.zhaw.example.le03b.u3;
 
 
 public class Test1 {
@@ -9,7 +9,7 @@ public class Test1 {
 				intarr[i] = i;
 				System.out.println(intarr[i]);
 				//throw new NullPointerException();
-			} catch (ArrayIndexOutOfBoundsException e) {
+			} catch (Exception e) {
 				System.out.println(e.getClass().getName());
 				System.out.println("Index zu gross: " + e.getMessage());
 			}

@@ -1,8 +1,8 @@
-package ch.zhaw.exercise.le04a.task1;
+package ch.zhaw.exercise.le04a.task3;
 
 import java.io.Serializable;
 
-public class Motor implements Serializable {
+public class Motor  implements Serializable {
 
 	private static final long serialVersionUID = 1198855187409536290L;
 

@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 public class MoneyChangeTest {
 
-	MoneyChange mc;
+	MoneyChange moneyChange;
 
 	@Before
 	public void setUp() {
@@ -23,27 +23,27 @@ public class MoneyChangeTest {
 		when(cR.getRate_EUROtoPOUND()).thenReturn(0.86);
 
 		//Mockito einsetzen
-		mc = new MoneyChange(cR);
+		moneyChange = new MoneyChange(cR);
 	}
 
 	@Test
 	public void testChange() {
 		//wechseln
 		double euro = 1;
-		assertEquals(1.29, mc.changeMoneyToDollar(euro),0.01);
-		assertEquals(1.0,  mc.changeMoneyToEuro(euro),0.01);
-		assertEquals(0.86, mc.changeMoneyToPound(euro),0.01);
-		assertEquals(1.25, mc.changeMoneyToSFR(euro),0.01);
+		assertEquals(1.29, moneyChange.changeMoneyToDollar(euro),0.01);
+		assertEquals(1.0,  moneyChange.changeMoneyToEuro(euro),0.01);
+		assertEquals(0.86, moneyChange.changeMoneyToPound(euro),0.01);
+		assertEquals(1.25, moneyChange.changeMoneyToSFR(euro),0.01);
 	}
 
 	@Test
 	public void testChange10() {
 		//wechseln
 		double euro = 10;
-		assertEquals(12.9, mc.changeMoneyToDollar(euro),0.01);
-		assertEquals(10.0,  mc.changeMoneyToEuro(euro),0.01);
-		assertEquals(8.6, mc.changeMoneyToPound(euro),0.01);
-		assertEquals(12.5, mc.changeMoneyToSFR(euro),0.01);
+		assertEquals(12.9, moneyChange.changeMoneyToDollar(euro),0.01);
+		assertEquals(10.0,  moneyChange.changeMoneyToEuro(euro),0.01);
+		assertEquals(8.6, moneyChange.changeMoneyToPound(euro),0.01);
+		assertEquals(12.5, moneyChange.changeMoneyToSFR(euro),0.01);
 	}
 
 
@@ -53,9 +53,9 @@ public class MoneyChangeTest {
 		//ungültiger Euro Wert
 		double euro = -2;
 		//Testfälle mit mc
-		assertEquals(0.0, mc.changeMoneyToDollar(euro),0.01);
-		assertEquals(0.0, mc.changeMoneyToEuro(euro),0.01);
-		assertEquals(0.0, mc.changeMoneyToPound(euro),0.01);
-		assertEquals(0.0, mc.changeMoneyToSFR(euro),0.01);
+		assertEquals(0.0, moneyChange.changeMoneyToDollar(euro),0.01);
+		assertEquals(0.0, moneyChange.changeMoneyToEuro(euro),0.01);
+		assertEquals(0.0, moneyChange.changeMoneyToPound(euro),0.01);
+		assertEquals(0.0, moneyChange.changeMoneyToSFR(euro),0.01);
 	}
 }
