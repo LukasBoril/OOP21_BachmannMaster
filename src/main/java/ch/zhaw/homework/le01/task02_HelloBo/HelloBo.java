@@ -8,11 +8,7 @@ import javafx.stage.Stage;
 
 public class HelloBo extends Application {
 
-    Stage primaryStage = new Stage();
 
-    public HelloBo() {
-        //start(primaryStage);
-    }
 
     public void start(Stage primaryStage) {
         Label l1 = new Label("Hallo");
