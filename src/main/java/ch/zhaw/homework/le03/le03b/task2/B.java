@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le03.l03b.task2;
+package ch.zhaw.homework.le03.le03b.task2;
 
 public class B {
 	public B(int x) throws Exc1, Exc2 {

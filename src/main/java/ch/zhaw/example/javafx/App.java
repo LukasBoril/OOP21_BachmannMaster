@@ -1,3 +1,4 @@
+
 package ch.zhaw.example.javafx;
 
 import javafx.application.Application;
@@ -8,9 +9,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * JavaFX App
+ /* JavaFX App
  */
+
 public class App extends Application {
 
     private static Scene scene;
@@ -38,3 +39,4 @@ public class App extends Application {
     }
 
 }
+

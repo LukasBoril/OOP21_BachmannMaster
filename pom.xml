@@ -85,7 +85,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ch.zhaw.example.javafx.App</mainClass>
+                            <mainClass>ch/zhaw/homework/le01/task3d/LamdaEventHandler</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

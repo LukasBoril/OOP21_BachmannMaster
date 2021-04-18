@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le03.l03b.task2;
+package ch.zhaw.homework.le03.le03b.task2;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
 
 	public Main() throws Exc1 {
 		try{
-			int x=1;
+			int x=3;
 			new A(x);
 		} catch (Exc1 e){
 			System.out.print("Main\n");

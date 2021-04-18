@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le03.l03b.task1;
+package ch.zhaw.homework.le03.le03b.task1;
 
 class Catch {
     public static void main(String[] args){

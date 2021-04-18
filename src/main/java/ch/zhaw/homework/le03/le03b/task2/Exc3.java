@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le03.l03b.task2;
+package ch.zhaw.homework.le03.le03b.task2;
 
 @SuppressWarnings("serial")
 public class Exc3 extends Exception {
