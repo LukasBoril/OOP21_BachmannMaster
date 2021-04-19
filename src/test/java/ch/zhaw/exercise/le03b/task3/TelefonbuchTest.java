@@ -1,7 +1,5 @@
-/*package ch.zhaw.exercise.le03b.task3;
+package ch.zhaw.exercise.le03b.task3;
 
-import ch.zhaw.example.le03b.telefonbuch.NotValidEntryException;
-import ch.zhaw.example.le03b.telefonbuch.Telefonbuch;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +23,13 @@ public class TelefonbuchTest {
 			t.addEntry("Alfons", "987987");
 			t.addEntry("", "23423");
 		} catch (NotValidEntryException e) {
-			System.out.println("Exception aufgetreten");
-			assertEquals("ein parameter ist null oder leer",
+			System.out.println("Exception aufgetreten: noValidEntry");
+			assertEquals("ein Parameter ist null oder leer!",
 					e.getMessage());
+        } catch (NotValidPhoneNumber e) {
+            System.out.println("Exception aufgetreten: noValidNumber");
+            assertEquals(null,
+                    e.getMessage());
 		}
 
 		assertEquals("987987", t.getNumber("Alfons"));
@@ -40,4 +42,4 @@ public class TelefonbuchTest {
 		t = null;
 	}
 
-}*/
+}

@@ -33,4 +33,9 @@ public class EuroTest {
 		});
 
 	}
+
+	@Test
+	public void testInvalid2() throws Exception {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> two.add(-0.1));
+	}
 }

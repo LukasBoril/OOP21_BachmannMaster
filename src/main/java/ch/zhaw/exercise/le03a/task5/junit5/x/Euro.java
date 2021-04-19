@@ -15,4 +15,9 @@ public class Euro {
 		if (euro.getAmount() <0) throw new IllegalArgumentException();
 		this.amount += euro.getAmount();
 	}
+
+	public void add (double euro) {
+		if (euro <0) throw new IllegalArgumentException();
+		this.amount += euro;
+	}
 }
