@@ -1,25 +1,22 @@
-package ch.zhaw.homework.le02;
+package ch.zhaw.homework.le04.Wissensicherung;
 
 
+import ch.zhaw.exercise.le04a.task1.Auto;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -42,7 +39,7 @@ public class EntscheidungsKnopf2 extends Application {
         root.setCenter(createCenterPane());
         root.setBottom(createBottomPane());
 
-        Scene scene = new Scene(root, 350, 250);
+        Scene scene = new Scene(root, 400, 250);
 
         primaryStage.setTitle("Entscheidungsknopf 2");
         primaryStage.setScene(scene);
@@ -65,22 +62,57 @@ public class EntscheidungsKnopf2 extends Application {
      * @return the top pane as a hbox
      */
     private Pane createTopPane() {
+        final MenuItem loadMenu = new MenuItem("Vorschläge Laden");
+        final MenuItem saveMenu = new MenuItem("Vorschläge speichern");
+        final Menu menu1 = new Menu("Datei");
+        menu1.getItems().addAll(loadMenu, saveMenu);
+        final MenuBar menuBar = new MenuBar(menu1) ;
+
 
         final Label labelProposal = new Label("Was tun?:");
         final Label labelAmount = new Label("[0]");
         final TextField textProposal = new TextField();
         final Button buttonProposal = new Button("Save");
+        final Button buttonDelete = new Button("Delete");
+
+        loadMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               values =  unsserialize();
+                labelAmount.setText("[" + values.size() + "]");
+            }
+        });
+
+        saveMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                serialize(values);
+            }
+        });
+
 
         EventHandler<ActionEvent> onTextEnter = event -> {
-
             if (textProposal.getText().isEmpty()) {
                 displayAlert("Bitte Text eingeben!");
             } else {
-                if (values.contains(textProposal.getText())) {
-                    displayAlert("Der Eintrag '" + textProposal.getText() + "' existiert bereits");
-                } else {
-                    values.add(textProposal.getText());
-                    textProposal.clear();
+                if (event.getSource() == buttonProposal) {
+                    if (values.contains(textProposal.getText())) {
+                        displayAlert("Der Eintrag '" + textProposal.getText() + "' existiert bereits!");
+                    } else {
+                        values.add(textProposal.getText());
+                        textProposal.clear();
+                    }
+                } else if (event.getSource() == buttonDelete) {
+                    if (!values.contains(textProposal.getText())) {
+                        displayAlert("Der Eintrag '" + textProposal.getText() + "' wurde nicht gefunden!");
+                    } else {
+                        values.remove(textProposal.getText());
+                        /*Iterator<String> iter = values.iterator();
+                        while (iter.hasNext()) {
+                            iter.next();
+                            values.remove(iter);
+                        }*/
+                    }
                 }
             }
             labelAmount.setText("[" + values.size() + "]");
@@ -88,11 +120,14 @@ public class EntscheidungsKnopf2 extends Application {
 
         buttonProposal.setOnAction(onTextEnter);
         textProposal.setOnAction(onTextEnter);
+        buttonDelete.setOnAction(onTextEnter);
 
-        HBox hbox = new HBox(10, labelProposal, textProposal, labelAmount, buttonProposal);
+        HBox hbox = new HBox(10,menuBar, labelProposal, textProposal, labelAmount, buttonProposal, buttonDelete);
         hbox.setPadding(new Insets(7, 7, 7, 7));
+        VBox vBox = new VBox(menuBar, hbox);
 
-        return hbox;
+
+        return vBox;
 
     }
 
@@ -157,7 +192,35 @@ public class EntscheidungsKnopf2 extends Application {
     private ArrayList<String> initValues() {
 
         return new ArrayList<>();
+    }
 
+    public static void serialize(ArrayList<String> events) {
+        try (OutputStream fos = new FileOutputStream("src/events.ser")) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(events);
+            System.out.println("Object serialisiert!");
+            System.out.println("----------------------");
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<String> unsserialize() {
+        try (InputStream fis = new FileInputStream("src/events.ser")) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            System.out.println("Object deserialisiert:");
+            System.out.println("----------------------");
+            return (ArrayList<String>) ois.readObject();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
