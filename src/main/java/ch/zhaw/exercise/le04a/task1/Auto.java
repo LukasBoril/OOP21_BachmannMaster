@@ -7,6 +7,7 @@ public class Auto extends Fahrzeug implements Serializable {
 
     private Motor motor;
     private String farbe;
+    //private transient String farbe; (-> mit transient wird diese Variable nicht serialisiert. bei Unserialize hat sie null)
 
     public Auto(Motor motor, String farbe) {
         this.motor = motor;

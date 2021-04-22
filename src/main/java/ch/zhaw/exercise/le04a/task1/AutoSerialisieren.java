@@ -3,20 +3,23 @@ package ch.zhaw.exercise.le04a.task1;
 import java.io.*;
 
 public class AutoSerialisieren {
+
     public static void main(String[] args) {
         Auto a2;
         Auto a1 = new Auto(new Motor(200), "Orange");
         a1.setNummer("ZH 407 384");
 
-        serialize(a1);
+        if (Integer.parseInt(args[0]) == 1) {
+            serialize(a1);
 
-        a2 = unsserialize();
-        System.out.println("Farbe: " + a2.getFarbe());
-        System.out.println("Hubraum: " + a2.getMotor());
-        System.out.println("Nummernschild: " + a2.getNummer());
-
-
+        } else if (Integer.parseInt(args[0]) == 2) {
+            a2 = unsserialize();
+            System.out.println("Farbe: " + a2.getFarbe());
+            System.out.println("Hubraum: " + a2.getMotor().getHubraum());
+            System.out.println("Nummernschild: " + a2.getNummer());
         }
+
+    }
 
     public static void serialize(Auto auto) {
         try (OutputStream fos = new FileOutputStream("src/auto.ser")) {
@@ -25,6 +28,9 @@ public class AutoSerialisieren {
             oos.writeObject(auto);
             System.out.println("Object serialisiert!");
             System.out.println("----------------------");
+            System.out.println("Farbe: " + auto.getFarbe());
+            System.out.println("Hubraum: " + auto.getMotor().getHubraum());
+            System.out.println("Nummernschild: " + auto.getNummer());
             System.out.println();
         } catch (IOException e) {
             e.printStackTrace();

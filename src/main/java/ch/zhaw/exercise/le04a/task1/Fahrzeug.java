@@ -3,7 +3,7 @@ package ch.zhaw.exercise.le04a.task1;
 import java.io.Serializable;
 
 public class Fahrzeug implements Serializable {
-    public static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 3L;
 
     private String nummer;
 

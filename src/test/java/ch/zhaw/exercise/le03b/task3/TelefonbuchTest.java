@@ -16,25 +16,49 @@ public class TelefonbuchTest {
 	}
 
 	@Test
-	public void testAddEntry() {
-
+	public void testAddEntryAllGood() {
 		try {
 			t.addEntry("Zora", "123123");
 			t.addEntry("Alfons", "987987");
+		} catch (NotValidEntryException e) {
+			System.out.println("Exception aufgetreten: noValidEntry");
+			assertEquals("ein Parameter ist null oder leer!",
+					e.getMessage());
+		} catch (NotValidPhoneNumber e) {
+			System.out.println("Exception aufgetreten: noValidNumber");
+			assertEquals(null,
+					e.getMessage());
+		}
+		assertEquals("987987", t.getNumber("Alfons"));
+		assertEquals("123123", t.getNumber("Zora"));
+
+	}
+
+	@Test
+	public void testAddEntryNoValidEntry() {
+
+		try {
 			t.addEntry("", "23423");
 		} catch (NotValidEntryException e) {
 			System.out.println("Exception aufgetreten: noValidEntry");
 			assertEquals("ein Parameter ist null oder leer!",
 					e.getMessage());
         } catch (NotValidPhoneNumber e) {
-            System.out.println("Exception aufgetreten: noValidNumber");
-            assertEquals(null,
-                    e.getMessage());
+            ;
 		}
+	}
 
-		assertEquals("987987", t.getNumber("Alfons"));
-		assertEquals("123123", t.getNumber("Zora"));
-
+	@Test
+	public void testAddEntryNoValidNumber() {
+		try {
+			t.addEntry("Hans", "555");
+		} catch (NotValidEntryException e) {
+			;
+		} catch (NotValidPhoneNumber e) {
+			System.out.println("Exception aufgetreten: noValidNumber");
+			assertEquals(null,
+					e.getMessage());
+		}
 	}
 
 	@After
