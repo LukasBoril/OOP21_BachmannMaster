@@ -46,7 +46,7 @@ class Worker extends Thread {
                 counter.up(this.getName());
             for (int i = 0; i < Counter.LIMIT; i++)
                 counter.down(this.getName());
+
         }
     }
 }
-
