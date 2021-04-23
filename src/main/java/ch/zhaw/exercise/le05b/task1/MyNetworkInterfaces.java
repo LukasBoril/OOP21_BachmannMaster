@@ -6,6 +6,7 @@ import java.util.Enumeration;
 public class MyNetworkInterfaces {
 
     public static void main(String[] args) {
+
 // System.setProperty("java.net.preferIPv4Stack", "true");
         try {
             Enumeration<NetworkInterface> interfaceList =
