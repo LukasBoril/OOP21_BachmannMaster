@@ -5,10 +5,12 @@ public class TwoThreadsTestR {
         MySimpleRun aRunnable = new MySimpleRun();
         new Thread(aRunnable, "Jamaica").start();
         new Thread(aRunnable, "Fiji").start();
-        System.out.println("main exits " + Thread.currentThread());
+        System.out.println("main exits " + Thread.currentThread().toString());
     }
 }
+
 class MySimpleRun implements Runnable {
+
     public void run() {
         for (int i = 0; i < 10; i++) {
             System.out.println(i + " " + Thread.currentThread().getName());

@@ -1,12 +1,10 @@
-/*package ch.zhaw.exercise.le03b.task3;
+package ch.zhaw.example.le03b.telefonbuch;
 
-import ch.zhaw.exercise.le03b.task3.NotValidEntryException;
-import ch.zhaw.exercise.le03b.task3.Telefonbuch;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TelefonbuchTest {
 
@@ -30,8 +28,8 @@ public class TelefonbuchTest {
 					e.getMessage());
 		}
 
-		//assertEquals("987987", t.getNumber("Alfons"));
-		//assertEquals("123123", t.getNumber("Zora"));
+		assertEquals("987987", t.getNumber("Alfons"));
+		assertEquals("123123", t.getNumber("Zora"));
 
 	}
 
@@ -40,4 +38,4 @@ public class TelefonbuchTest {
 		t = null;
 	}
 
-}*/
+}
