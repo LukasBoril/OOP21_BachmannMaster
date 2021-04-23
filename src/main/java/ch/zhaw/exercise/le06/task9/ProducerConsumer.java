@@ -61,7 +61,7 @@ class Buffer {
         while (available) {
             try {
                 wait();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
         data = x;
@@ -73,7 +73,7 @@ class Buffer {
         while (!available) {
             try {
                 wait();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
         available = false;
