@@ -73,7 +73,7 @@ public class EntscheidungsKnopf2 extends Application {
         menu1.getItems().addAll(laden,speichern);
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu1);
-        root.setTop(menuBar);
+        root.setLeft(menuBar);
 
 
         Scene scene = new Scene(root, 350, 250);
