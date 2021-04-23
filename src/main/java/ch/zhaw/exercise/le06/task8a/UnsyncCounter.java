@@ -5,7 +5,7 @@ public class UnsyncCounter {
         Counter counter = new Counter();
         for (int i = 0; i < 10; i++)
             new Worker(counter).start();
-		System.out.println("Exit Main");
+        System.out.println("Exit Main");
     }
 }
 
@@ -41,12 +41,11 @@ class Worker extends Thread {
         System.out.println("Thread " + this.getName() + " started!");
 
         while (true) {
-            synchronized (counter) {
-                for (int i = 0; i < Counter.LIMIT; i++)
-                    counter.up(this.getName());
-                for (int i = 0; i < Counter.LIMIT; i++)
-                    counter.down(this.getName());
-            }
+            for (int i = 0; i < Counter.LIMIT; i++)
+                counter.up(this.getName());
+            for (int i = 0; i < Counter.LIMIT; i++)
+                counter.down(this.getName());
+
         }
     }
 }
