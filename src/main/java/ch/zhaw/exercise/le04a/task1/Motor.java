@@ -4,13 +4,15 @@ import java.io.Serializable;
 
 public class Motor implements Serializable {
 
-    private int hubraum;
+	private static final long serialVersionUID = 1198855187409536290L;
 
-    public Motor(int hubraum) {
-        this.hubraum = hubraum;
-    }
+	private int hubraum;
 
-    public int getHubraum() {
-        return this.hubraum;
-    }
+	public Motor(int hubraum) {
+		this.hubraum = hubraum;
+	}
+
+	public int getHubraum() {
+		return hubraum;
+	}
 }
