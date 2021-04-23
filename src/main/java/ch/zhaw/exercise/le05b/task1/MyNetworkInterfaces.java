@@ -1,6 +1,7 @@
 package ch.zhaw.exercise.le05b.task1;
 
 import java.net.*;
+import java.sql.SQLOutput;
 import java.util.Enumeration;
 
 public class MyNetworkInterfaces {
@@ -15,10 +16,12 @@ public class MyNetworkInterfaces {
                 NetworkInterface iface = interfaceList.nextElement();
                 System.out.println("Interface " + iface.getName() + ":");
                 Enumeration<InetAddress> addrList = iface.getInetAddresses();
+
 // get list of *all* IPs
                 if (!addrList.hasMoreElements()) {
                     System.out.println("\t(No addresses for this interface)");
                 }
+
                 while (addrList.hasMoreElements()) {
 // extract a single IP from the list of IPs
                     InetAddress address = addrList.nextElement();
