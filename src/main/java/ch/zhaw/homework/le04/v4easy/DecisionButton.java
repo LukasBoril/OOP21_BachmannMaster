@@ -57,6 +57,7 @@ public class DecisionButton extends Application {
      * @param args command line args
      */
     public static void main(String[] args) {
+        System.setProperty("prism.lcdtext", "false");
         launch(args);
     }
 
