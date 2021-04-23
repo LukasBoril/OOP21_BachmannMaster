@@ -1,14 +1,7 @@
 package ch.zhaw.exercise.le06.task1;
 
 public class TwoThreadsTest {
-<<<<<<< HEAD
-    public static void main(String[] args) {
-        new SimpleThread("Jamaica").start();
-        new SimpleThread("Fiji").start();
-        System.out.println("main exits " + Thread.currentThread());
-    }
-}
-=======
+
 
     public static void main(String[] args) {
         new SimpleThread("Jamaica").start();
@@ -18,15 +11,11 @@ public class TwoThreadsTest {
 
 }
 
->>>>>>> master
 class SimpleThread extends Thread {
     public SimpleThread(String str) {
         super(str);
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     public void run() {
         for (int i = 0; i < 10; i++) {
             System.out.println(i + " " + getName());
