@@ -7,7 +7,7 @@ public class PrintWithBufferStringToFile {
 
     public static void main(String[] args) {
 
-        File file = new File("src/main/java/ch/zhaw/exercise/le05a/task1d/datei.txt");
+        File file = new File("src/main/java/ch/zhaw/exercise/le05a/task1d/datei1.txt");
         long start = 0;
         // Append flag is set to true
         try (FileWriter fw = new FileWriter(file, false);
