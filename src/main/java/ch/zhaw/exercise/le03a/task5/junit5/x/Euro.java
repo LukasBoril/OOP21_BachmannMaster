@@ -15,4 +15,7 @@ public class Euro {
 		if (euro.getAmount() <0) throw new IllegalArgumentException();
 		this.amount += euro.getAmount();
 	}
+
+
 }
+
