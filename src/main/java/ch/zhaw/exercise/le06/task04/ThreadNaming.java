@@ -1,0 +1,28 @@
+package ch.zhaw.exercise.le06.task04;
+
+class MyThread implements Runnable{
+    @Override
+    public void run(){
+        for(int i=0; i < 50; i++){
+            String name = Thread.currentThread().getName();
+            System.out.println("Thread " + name + " hat Nummer " + i + " verarbeitet");
+        }
+    }
+}
+
+
+public class ThreadNaming {
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new MyThread());
+        Thread t2 = new Thread(new MyThread());
+        t1.setName("Eins");
+        t2.setName("Zwei");
+        t1.start();
+        t2.start();
+        System.out.println(Thread.currentThread().getName());
+
+        //Alles auf einer Zeile
+        new Thread(new MyThread(), "Drei").start();
+    }
+}

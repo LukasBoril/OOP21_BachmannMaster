@@ -1,7 +1,5 @@
 package ch.zhaw.exercise.le04.task01;
 
-import ch.zhaw.exercise.le04.task02.Car;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
