@@ -11,7 +11,7 @@ public class FileWriterBufferTime {
         long start = 0;
 
         // Append flag is set to false
-        try (FileWriter fw = new FileWriter(file, false);
+        try (FileWriter fw = new FileWriter(file, false); //false is inactive...why?
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
 
