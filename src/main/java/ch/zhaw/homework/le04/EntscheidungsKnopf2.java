@@ -130,7 +130,27 @@ public class EntscheidungsKnopf2 extends Application {
         laden.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                System.out.println("Save");
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter fileExtension = new FileChooser.ExtensionFilter("select your load file ", "*.ser");
+                fileChooser.getExtensionFilters().add(fileExtension);
+                File file= fileChooser.showOpenDialog(new Stage());
+
+                if (!(file==null)) {
+                    try {
+                        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                        Object input = ois.readObject();
+                        values = (ArrayList<String>) input;
+                        ois.close();
+                    }
+                    catch (IOException ex) {
+                        System.out.println("Saving did not work, sorry");
+                        System.out.println(ex.toString());
+                    }
+                    catch (ClassNotFoundException ex) {
+                        System.out.println("Saving did not work, sorry");
+                        System.out.println(ex.toString());
+                    }
+                }
             }
         });
         MenuItem speichern = new MenuItem("Speichern");
