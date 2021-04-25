@@ -7,6 +7,7 @@ import java.io.IOException;
 public class FileWriterWrite {
 
     public static void main(String[] args) {
+
         String pathToPackage = "src/main/java/ch/zhaw/homework/le05a/task01a/";
         File file = new File(pathToPackage + "task01aDatei.txt");
 

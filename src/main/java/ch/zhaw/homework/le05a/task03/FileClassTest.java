@@ -7,6 +7,7 @@ import java.io.IOException;
 public class FileClassTest {
 
     public static void main(String[] args) {
+
         String path = "src";
         String pathToPackage = "src/main/java/ch/zhaw/homework/le05a/";
 
@@ -21,7 +22,8 @@ public class FileClassTest {
             System.out.println(entry);
         }
 
-        System.out.println(file.getAbsolutePath());
+        System.out.println("show...getAbsolutPath: " +file.getAbsolutePath());
+
 
         // -- 2 --
         // open an existing file and print the file size
