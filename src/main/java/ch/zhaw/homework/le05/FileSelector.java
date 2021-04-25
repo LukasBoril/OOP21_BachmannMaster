@@ -9,10 +9,10 @@ import java.io.File;
 public class FileSelector {
 
     private final ExtensionFilter[] extensionFilters = {
-            new ExtensionFilter("Text Dateien", ".txt"),
-            new ExtensionFilter("HTML Dateien", ".html"),
-            new ExtensionFilter("XML Dateien", ".xml"),
-            new ExtensionFilter("Serialisierte Objekt Dateien", ".ser")
+            new ExtensionFilter("Text Dateien", "*.txt"),
+            new ExtensionFilter("HTML Dateien", "*.html"),
+            new ExtensionFilter("XML Dateien", "*.xml"),
+            new ExtensionFilter("Serialisierte Objekt Dateien", "*.ser")
     };
 
     public File loadFile(Stage stage){

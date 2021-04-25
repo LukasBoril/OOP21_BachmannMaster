@@ -19,10 +19,10 @@ public class FileIOStrategy implements IOStrategy{
 
         Path savefile = Paths.get(fileSelector.saveFile(new Stage()).toString() + ".txt");
 
-        try {
-            BufferedWriter writer = Files.newBufferedWriter(savefile, StandardCharsets.UTF_8);
+        try (BufferedWriter writer = Files.newBufferedWriter(savefile, StandardCharsets.UTF_8)){
             for (String s : data){
                 writer.write(s);
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
