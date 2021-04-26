@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class Menu extends Application  {
+public class MenuTest extends Application  {
 
     public void start(Stage primaryStage) {
         try {

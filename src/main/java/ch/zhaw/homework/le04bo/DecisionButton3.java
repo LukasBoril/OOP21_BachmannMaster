@@ -115,7 +115,7 @@ public class DecisionButton3 extends Application {
                     displayAlert("this entry " + inputField.getText() + " already exists");
                 } else {
                     randomText.add(inputField.getText());
-                    inputField.clear();
+                    inputField.clear(); // clean up the input field for the next entry
                 }
             }
             inputAmount.setText("[" + randomText.size() + "]");
@@ -163,21 +163,20 @@ public class DecisionButton3 extends Application {
         return boxCenter;
     }
 
+    /**
+     * the Alert class is a separat class who creates an
+     * action Pain showing the alert and contains all needed for
+     * a simple alert info to the user. just try its "fully" automatic
+     * @param alertString
+     * @rturn a alert pain with info string <alertString>
+     */
     private void displayAlert(String alertString) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Alert on\n<DecisionButton2>");
+        alert.setTitle("Alert on\n<DecisionButton3>");
         alert.setHeaderText(alertString);
         alert.showAndWait();
 
     }
-
-/*    private String setInputAmount() {
-        inputAmount.setText("[" + randomText.size() + "]");
-    }*/
-
-/*    private void setFileName(String fileName) {
-
-    }*/
 
     /**
      * create a byte stream of the list received
@@ -187,7 +186,7 @@ public class DecisionButton3 extends Application {
     private void serialize(ArrayList<String> list) {
 
         if(list.isEmpty()) {
-            System.out.println("the file is empty, so it will not be stored");
+            System.out.println("the file is empty, so it will not be created/stored");
         }
         else {
             try (
@@ -197,8 +196,8 @@ public class DecisionButton3 extends Application {
                 oos.close();
                 fos.close();
 
-                System.out.println("successfully wrote <text list in to folder <ser>");
-                System.out.println("----------------------------------");
+                System.out.println("successfully wrote <text list> in to folder <ser>");
+                System.out.println("-------------------------------------------------");
                 System.out.println(" ");
             } catch (IOException e) {
                 e.printStackTrace();
