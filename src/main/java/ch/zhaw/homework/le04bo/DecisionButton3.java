@@ -18,21 +18,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.io.*;
-
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class DecisionButton3 extends Application {
 
     //private static final long serialVersionID = 123777L;
-    private ArrayList<String> randomText;
-    private final Random ran = new Random();
+    //private ArrayList<String> randomText;
+    //private final Random ran = new Random();
+    private Randomizer randomText;
     private String fileName = "src/buttonText.ser";
+
+    public DecisionButton3() {
+        randomText = new Randomizer();
+    }
 
     @Override
     public void start(Stage primaryStage) {
 
-        this.randomText = initValues();
 
         BorderPane root = new BorderPane();
         root.setTop(createMenuPain());
@@ -83,7 +86,7 @@ public class DecisionButton3 extends Application {
         fileMenu.getItems().addAll(load, store, exitItem);
 
         //if user clicks on store, run the serializable
-        store.setOnAction(event -> serialize(randomText));
+        store.setOnAction(event -> serialize(randomText.getList()));
 
         //if user clicks on load, run the deSerializable
         load.setOnAction(event -> deSerialize(fileName));
@@ -111,14 +114,14 @@ public class DecisionButton3 extends Application {
                 displayAlert("Please put in your text");
             }
             else {
-                if(randomText.contains(inputField.getText())) {
+                if(randomText.getList().contains(inputField.getText())) {
                     displayAlert("this entry " + inputField.getText() + " already exists");
                 } else {
-                    randomText.add(inputField.getText());
+                    randomText.addText(inputField.getText());
                     inputField.clear(); // clean up the input field for the next entry
                 }
             }
-            inputAmount.setText("[" + randomText.size() + "]");
+            inputAmount.setText("[" + randomText.sizeOfList() + "]");
         };
 
         inputField.setOnAction(keyStroke);
@@ -142,11 +145,11 @@ public class DecisionButton3 extends Application {
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         button.setOnAction(event -> {
-            if (randomText.isEmpty()) {
+            if (randomText.getRandomText().isEmpty()) {
                 displayAlert("No entries in 'whats up?' ");
             }
             else {
-                button.setText(this.getRandomText());
+                button.setText(this.randomText.getRandomText());
             }
         });
 
@@ -218,7 +221,10 @@ public class DecisionButton3 extends Application {
              ObjectInputStream ois = new ObjectInputStream(fis)) {
 
             list = (ArrayList) ois.readObject();
-            this.randomText = list;
+
+            for(String content : list) {
+               randomText.addText(content);
+            }
 
             ois.close();
             fis.close();
@@ -232,25 +238,6 @@ public class DecisionButton3 extends Application {
             exception.printStackTrace();
         }
         return list;
-
-    }
-
-    /**
-     * Initialize values for random proposals
-     *
-     * @return random action values
-     */
-    private ArrayList<String> initValues() {
-
-        return new ArrayList<>();
-    }
-
-    /**
-     * Get an answer out of the ArrayList <randomText>
-     * @return String previous entered text
-     */
-    private String getRandomText() {
-        return randomText.get(ran.nextInt(randomText.size()));
 
     }
 }
