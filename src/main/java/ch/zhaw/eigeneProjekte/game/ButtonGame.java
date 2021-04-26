@@ -1,4 +1,4 @@
-package ch.zhaw.eigeneProjekte;
+package ch.zhaw.eigeneProjekte.game;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

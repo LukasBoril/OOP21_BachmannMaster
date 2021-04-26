@@ -26,7 +26,7 @@ public class StopThreadByInterrupt extends Thread {
         }
         st.interrupt();
         try {
-            st.join();
+            st.join(); //warten bis alle ihre arbeit erledigt haben (warten bis er sich verbindet)
         } catch (InterruptedException ignored) {
         }System.out.println("main terminating");
     }
