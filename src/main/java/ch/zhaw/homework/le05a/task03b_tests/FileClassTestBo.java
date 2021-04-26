@@ -44,7 +44,7 @@ public class FileClassTestBo {
 
         // -- 2 --
         // create a new folder in to a path you like
-        // here e.g my own tempToKill folder in the Desktop folder
+        // here e.g my own tempToKill folder located in Desktop
         System.out.println("\n**********create a file (mkdir)**********");
         File file2 = new File(pathToFileTTK +File.separator +newFolderName);
 
