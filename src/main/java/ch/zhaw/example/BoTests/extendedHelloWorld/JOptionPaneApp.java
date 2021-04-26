@@ -17,7 +17,7 @@ import java.io.IOException;
  * Benötigte Klassen sind javax.swing.* und java.io.IOException falls
  * noch mit Exceptions gearbeitet wird
  */
-public class App {
+public class JOptionPaneApp {
    public static void main(String[] args) throws IOException {
 
        //Hier ein Teil des Klassikers, just for fun
@@ -25,12 +25,12 @@ public class App {
        HelloBo helloBo = new HelloBo(hi);
 
        try{     // JOptionPane.showInputDialog() gibt nicht nur die Info sonder liest grad mit ein
-                // und schreibt dies in die variable <input>
+                // und schreibt dies in die variable <input>. Einen Parent haben wir hier nicht
            String input = JOptionPane.showInputDialog(
                    null,helloBo.getString() +" tip was ein...");
 
                 //kopieren con <input> in eine neuen String var...
-           String answer = "Hi du hast " +input +" eingegeben";
+          // String answer = "Hi du hast " +input +" eingegeben";
 
                 //JOptionPane.showMessageDialog() kreiert ein neues Fenster und gibt
                 //alles als String Info in dem Fenster wieder aus.
