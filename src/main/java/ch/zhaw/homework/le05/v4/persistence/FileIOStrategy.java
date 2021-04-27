@@ -1,8 +1,8 @@
-package ch.zhaw.homework.le04.v4.persistence;
+package ch.zhaw.homework.le05.v4.persistence;
 
 
 
-import ch.zhaw.homework.le04.v4.domain.IOStrategy;
+import ch.zhaw.homework.le05.v4.domain.IOStrategy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

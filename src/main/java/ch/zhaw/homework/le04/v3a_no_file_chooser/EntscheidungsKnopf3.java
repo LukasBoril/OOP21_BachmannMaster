@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le04.v4easy;
+package ch.zhaw.homework.le04.v3a_no_file_chooser;
 
 
 import javafx.animation.PauseTransition;
@@ -19,8 +19,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * Entscheidungsknopf mit Serialisierung und Deserialisierung
@@ -28,16 +30,16 @@ import java.util.Optional;
  * Überprüfung leerer Eintrag
  */
 
-public class DecisionButton extends Application {
+public class EntscheidungsKnopf3 extends Application {
 
+    private ArrayList<String> values;
+    private final Random random = new Random();
     private final Label labelAmount = new Label("[0]");
-    private DecisionData decisionData;
-
 
     @Override
     public void start(Stage primaryStage) {
 
-        decisionData = new DecisionData();
+        this.values = initValues();
 
         BorderPane root = new BorderPane();
         root.setTop(createMenuPane());
@@ -46,7 +48,7 @@ public class DecisionButton extends Application {
 
         Scene scene = new Scene(root, 500, 250);
 
-        primaryStage.setTitle("Entscheidungsknopf 4");
+        primaryStage.setTitle("Entscheidungsknopf 3");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -70,8 +72,6 @@ public class DecisionButton extends Application {
     private Node createMenuPane() {
 
         MenuBar menuBar = new MenuBar();
-
-        // the file menu
         Menu menuFile = new Menu("_Datei");
         menuFile.setMnemonicParsing(true);
 
@@ -79,18 +79,8 @@ public class DecisionButton extends Application {
         MenuItem menuSave = createMenuItem("Entscheidungen _speichern", event -> saveDecision(), KeyCode.S, KeyCombination.CONTROL_DOWN);
         MenuItem menuExit = createMenuItem("_Beenden", event -> exitDecision(), KeyCode.F4, KeyCombination.ALT_DOWN);
 
-        // the strategy menu
-        Menu menuStrategy = new Menu("_Strategy");
-        menuStrategy.setMnemonicParsing(true);
-
-        ToggleGroup toggleGroup = new ToggleGroup();
-        RadioMenuItem radioMenuObjectStream = createMenuItem("_Object Stream IO", event -> decisionData.setIOStrategy(new ObjectStreamStrategy()), toggleGroup, true);
-        RadioMenuItem radioMenuFileStream = createMenuItem("_File Stream IO", event -> decisionData.setIOStrategy(new FileIOStrategy()), toggleGroup, false);
-
-        // add menu items to menu
         menuFile.getItems().addAll(menuOpen, menuSave, menuExit);
-        menuStrategy.getItems().addAll(radioMenuObjectStream, radioMenuFileStream);
-        menuBar.getMenus().addAll(menuFile, menuStrategy);
+        menuBar.getMenus().addAll(menuFile);
         return menuBar;
     }
 
@@ -110,12 +100,13 @@ public class DecisionButton extends Application {
             if (textProposal.getText().isEmpty()) {
                 displayAlert(Alert.AlertType.INFORMATION, "Bitte Text eingeben!");
             } else {
-                if (decisionData.contains(textProposal.getText())) {
+                if (values.contains(textProposal.getText())) {
                     displayAlert(Alert.AlertType.INFORMATION, "Der Eintrag " + textProposal.getText() + " existiert bereits");
                 } else {
-                    decisionData.add(textProposal.getText());
+                    values.add(textProposal.getText());
                     textProposal.clear();
                 }
+
             }
             updateAmount();
         };
@@ -138,11 +129,12 @@ public class DecisionButton extends Application {
      * @return the center pane as a hbox
      */
     private Pane createCenterPane() {
+        System.setProperty("prism.lcdtext", "false");
         Button button = new Button("Klick mich");
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         button.setOnAction(event -> {
-            if (decisionData.isEmpty()) displayAlert(Alert.AlertType.INFORMATION, "Noch keine 'Was tun?' Einträge");
-            else button.setText(decisionData.getRandomText());
+            if (values.isEmpty()) displayAlert(Alert.AlertType.INFORMATION, "Noch keine 'Was tun?' Einträge");
+            else button.setText(this.getRandomText());
         });
 
         HBox boxCenter = new HBox(10, createSpacer(), button, createSpacer());
@@ -182,7 +174,6 @@ public class DecisionButton extends Application {
      * Create a Menu Item with an Accelerator
      *
      * @param menuText  the text of the menu
-     * @param value the event handler call back
      * @param code      the accelerator Code e.g. KeyCode.X
      * @param modifiers the modifier e.g. KeyCombination.CONTROL_DOWN
      * @return the MenuItem
@@ -193,25 +184,6 @@ public class DecisionButton extends Application {
         item.setOnAction(value);
         return item;
     }
-
-    /**
-     * Create a radio menu item and add it to toggle group
-     *
-     * @param menuText the text of the menu
-     * @param value the event handler call back
-     * @param toggleGroup the toggle group to add the radio item
-     * @param selected shall the menu be selected
-     * @return the RadioMenuItem
-     */
-    private RadioMenuItem createMenuItem(String menuText, EventHandler<ActionEvent> value, ToggleGroup toggleGroup , boolean selected) {
-        RadioMenuItem item = new RadioMenuItem(menuText);
-        item.setOnAction(value);
-        item.setSelected(selected);
-        item.setToggleGroup(toggleGroup);
-        return item;
-    }
-
-
 
     /**
      * Create Spacer Rect
@@ -229,7 +201,7 @@ public class DecisionButton extends Application {
      */
     private void updateAmount() {
 
-        labelAmount.setText("[" + decisionData.getSize() + "]");
+        labelAmount.setText("[" + values.size() + "]");
 
         String style = labelAmount.getStyle();
         labelAmount.setStyle("-fx-background-color: rgb(119, 192, 75, .9)");
@@ -239,15 +211,27 @@ public class DecisionButton extends Application {
     }
 
     /**
+     * Return random values (proposals)
+     *
+     * @return a random proposal
+     */
+    private String getRandomText() {
+
+        return values.get(random.nextInt(values.size()));
+
+    }
+
+
+    /**
      * Deserialize the data from the file
      */
     private void loadDecision() {
         try {
             String fileName = createFileName();
-            decisionData.loadDecisions(fileName);
+            values = deserialize(fileName);
             updateAmount();
             displayAlert(Alert.AlertType.CONFIRMATION, "'Was tun?' Liste von Datei " + fileName + " geladen.");
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             displayAlert(Alert.AlertType.ERROR, e.getLocalizedMessage());
         }
     }
@@ -258,7 +242,7 @@ public class DecisionButton extends Application {
     private void saveDecision() {
         try {
             String fileName = createFileName();
-            decisionData.saveDecisions(fileName);
+            serialize(values, fileName);
             displayAlert(Alert.AlertType.CONFIRMATION, "'Was tun?' Liste gespeichert in Datei " + fileName + ".");
         } catch (IOException e) {
             displayAlert(Alert.AlertType.ERROR, e.getLocalizedMessage());
@@ -267,11 +251,11 @@ public class DecisionButton extends Application {
 
     /**
      * Create file name for serialisation
+     *
      * @return the file name in the user home folder
      */
-    private String createFileName () {
-        return  System.getProperty("user.home") + System.getProperty("file.separator") +
-                (decisionData.getIOStrategy() instanceof ObjectStreamStrategy ?  "decision.ser" : "decision.txt");
+    private String createFileName() {
+        return System.getProperty("user.home") + System.getProperty("file.separator") + "decision.ser";
     }
 
     /**
@@ -284,5 +268,56 @@ public class DecisionButton extends Application {
         }
     }
 
+    /**
+     * Initialize values for random proposals
+     *
+     * @return random action values
+     */
+    private ArrayList<String> initValues() {
+
+        return new ArrayList<>();
+
+    }
+
+    /**
+     * Serializes the ArrayList to a file
+     *
+     * @param data     the ArrayList to serialize
+     * @param fileName the fileName for serialisation
+     * @throws IOException an IOExecetion if the serialisation is not successful
+     */
+    private void serialize(ArrayList<String> data, String fileName) throws IOException {
+
+        try (OutputStream outStream = new FileOutputStream(fileName);
+             ObjectOutputStream outObject = new ObjectOutputStream(outStream)) {
+
+            outObject.writeObject(data);
+
+        } catch (IOException e) {
+            throw new IOException("Daten können nicht in der Datei " + fileName + " gespeichert werden!");
+        }
+    }
+
+
+    /**
+     * Deserializes file to object
+     *
+     * @param fileName to read from
+     * @return desrialized ArrayList
+     * @throws IOException if file is not found or if unable to deserialize data
+     */
+    @SuppressWarnings("unchecked")
+    private ArrayList<String> deserialize(String fileName) throws IOException {
+
+        try (InputStream inStream = new FileInputStream(fileName);
+             ObjectInputStream inObject = new ObjectInputStream(inStream)) {
+
+            return (ArrayList<String>) inObject.readObject();
+
+        } catch (ClassNotFoundException | IOException e) {
+            throw new IOException("Die Daten können nicht von der Datei " + fileName + " gelesen werden");
+
+        }
+    }
 
 }

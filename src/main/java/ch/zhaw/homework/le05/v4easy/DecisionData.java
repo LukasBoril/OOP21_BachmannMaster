@@ -1,4 +1,4 @@
-package ch.zhaw.homework.le04.v4easy;
+package ch.zhaw.homework.le05.v4easy;
 
 
 import java.io.IOException;

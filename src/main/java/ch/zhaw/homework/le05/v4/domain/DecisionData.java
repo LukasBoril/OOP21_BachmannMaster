@@ -1,8 +1,8 @@
-package ch.zhaw.homework.le04.v4.domain;
+package ch.zhaw.homework.le05.v4.domain;
 
 
 
-import ch.zhaw.homework.le04.v4.persistence.ObjectStreamStrategy;
+import ch.zhaw.homework.le05.v4.persistence.ObjectStreamStrategy;
 
 import java.io.File;
 import java.io.IOException;
