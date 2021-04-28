@@ -1,7 +1,6 @@
 package ch.zhaw.homework.le05a.task05_WiSiButton4;
 
 import ch.zhaw.homework.le04bo.Randomizer;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,18 +18,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class DecisionButton4 extends Application {
-
-    private ch.zhaw.homework.le05a.task05_WiSiButton4.Randomizer randomText;
+    private Randomizer randomText;
     private ObjectStream myObjectStream;
+    private FileIOstream myFileIOstream;
 
 
     public DecisionButton4() {
-        randomText = new ch.zhaw.homework.le05a.task05_WiSiButton4.Randomizer();
+        randomText = new Randomizer();
         myObjectStream = new ObjectStream();
+        myFileIOstream = new FileIOstream();
     }
 
     @Override
@@ -69,30 +70,55 @@ public class DecisionButton4 extends Application {
         MenuBar menuBar = new MenuBar();
 
         // Create menus
-        javafx.scene.control.Menu fileMenu = new javafx.scene.control.Menu("File");
+        Menu fileMenu = new Menu("File");
+        Menu strategyMenu = new Menu("Strategy");
 
-        // Create MenuItems
-        MenuItem load = new MenuItem("load");
-        MenuItem store = new MenuItem("store");
+        // Create File Menu Items
+        //MenuItem load = new MenuItem("load");
+        //MenuItem store = new MenuItem("store");
         MenuItem exitItem = new MenuItem("Exit");
 
-        // Set Accelerator for Exit MenuItem.
-        exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
+        //creating the items for Strategy menu
+        Menu oStream = new Menu("Object Stream IO");
+        Menu fStream = new Menu("File Stream IO");
 
-        // When user click on the Exit item, exit session
+        //creating sub menus for each strategy
+        MenuItem sObject = new MenuItem("save object");
+        MenuItem lObject = new MenuItem("load object");
+        MenuItem sFile = new MenuItem("save file");
+        MenuItem lFile = new MenuItem("load file");
+
+        //adding the sub menus for each strategy
+        oStream.getItems().addAll(sObject, lObject);
+        fStream.getItems().addAll(sFile, lFile);
+
+        /* prg exit strategy
+        *  Set Accelerator for Exit MenuItem and activate the event handler
+        *  exit session with System.exit(0));
+        */
+        exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
         exitItem.setOnAction(event -> System.exit(0));
 
         // Add menuItems to the Menus
-        fileMenu.getItems().addAll(load, store, exitItem);
+        fileMenu.getItems().addAll( exitItem); // load, store, is put out for the moment
+
+        // Add menuItems to the strategy menu
+        strategyMenu.getItems().addAll(oStream, fStream);
+
 
         //if user clicks on store, run the serializable
-        store.setOnAction(event -> myObjectStream.serialize(randomText.getList()));
+        //store.setOnAction(event -> myObjectStream.serialize(randomText.getList()));
 
-        //if user clicks on load, run the deSerializable
-        load.setOnAction(event -> fetchFile());
+        //if user clicks on io strategy for object save or load
+        sObject.setOnAction(event -> myObjectStream.serialize(randomText.getList()));
+        lObject.setOnAction(event -> fetchObject());
+
+        //if user clicks on io strategy for file save or load
+        sFile.setOnAction(this::handleFile);
+        lFile.setOnAction(event -> fetchFile());
 
         // Add Menus to the MenuBar
-        menuBar.getMenus().addAll(fileMenu);
+        menuBar.getMenus().addAll(fileMenu, strategyMenu);
 
         return menuBar;
     }
@@ -180,12 +206,27 @@ public class DecisionButton4 extends Application {
 
     }
 
-    private void fetchFile() {
+    private void fetchObject() {
         ArrayList<String> tempList = myObjectStream.deSerialize(
                 myObjectStream.getFilePath() + myObjectStream.getFileName());
 
         for(String content : tempList) {
             this.randomText.addText(content);
+        }
+    }
+
+    private void fetchFile() {
+        ArrayList<String> tempList = myFileIOstream.getList();
+        for(String content : tempList) {
+            this.randomText.addText(content);
+        }
+    }
+
+    private void handleFile(ActionEvent event) {
+        try {
+            myFileIOstream.createFile(randomText.getList());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

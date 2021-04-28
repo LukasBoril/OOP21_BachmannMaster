@@ -81,6 +81,8 @@ public class nioClassTestBo {
         //if the file already exists, it does overwrite
         try(BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
             System.out.println("file successfully created");
+
+
             writer.write("Das ist mein erster Test\n" +
                              "um in einen Ordner ausserhalb zu schreiben"
                               +"\ncontent created @: "

@@ -9,12 +9,11 @@ public class ObjectStream implements Serializable {
 
     private String filePath;
     private String fileName;
-    boolean askFroDeSer;
+
 
     public ObjectStream() {
-        filePath = "/home/bonux/Documents/zhaw/testMat" +File.separator;
+        filePath = "/home/bonux/Desktop/tempToKill" +File.separator;
         fileName = "testButton4.ser";
-        askFroDeSer = false;
     }
 
     /**
@@ -89,13 +88,4 @@ public class ObjectStream implements Serializable {
         return fileName;
     }
 
-    /**
-     * have to be set to true outside this class
-     * for handling the return of the
-     * deserialized file return
-     * @ param askFroDeSer
-     */
-    public void setBoolean(boolean bool) {
-        this.askFroDeSer = bool;
-    }
 }
