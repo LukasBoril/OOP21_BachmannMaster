@@ -1,0 +1,111 @@
+#include "ESP8266WiFi.h"
+#include "Stream.h"
+
+//example: https://techtutorialsx.com/2018/06/02/esp8266-arduino-socket-server/
+
+char ssid[]  = "Elegame24Ghz";
+char password[] = "G455m31-cm";
+//create object to configure the socket server and to listen to connections from socket clients
+WiFiServer wifiServer(80);
+
+boolean alreadyConnected = false; // whether or not the client was connected previously
+
+
+void setup() {
+ //opening a serial connection
+  Serial.begin(115200);
+  delay(1000);
+
+ //connect the ESP8266 to the WiFi network
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi..");
+  }
+
+  Serial.println("Connected to the WiFi: IP: ");
+  Serial.println(WiFi.localIP());
+
+ //initialize the socket server
+  wifiServer.begin();
+}
+
+void loop() {
+
+ //check if there is a client available
+  WiFiClient client = wifiServer.available();
+
+  //check if a client is connected
+  if (client) {
+    Serial.println("We have a new client");
+    //String receivedLine = "";
+
+    //start reading for incoming data while the client is still connected
+    while (client.connected()) {
+
+      //check if there is data available, it will return the number of bytes available to read
+      while (client.available()>0) {
+        //read one byte by one of the available bytes
+        char c = client.read();
+        Serial.write(c);
+        client.write(c);
+      }
+      delay(10);
+
+      /*delay(10);
+
+      if (!alreadyConnected) {
+          // clead out the input buffer:
+          client.flush();
+          Serial.println("We have a new client");
+          client.println("Hello, client! Give me a command:");
+          alreadyConnected = true;
+      }
+
+      if (alreadyConnected)  {
+        char receivedChar = client.read();
+        if (receivedChar != '\n') {
+          receivedLine = receivedLine + receivedChar;
+        } else{
+          Serial.println("Client sends: " + receivedLine);
+        }
+      }*/
+    }
+
+    //keep the loop until the client disconnects
+    client.stop();
+    Serial.println("Client disconnected");
+
+
+
+    /*if (client.available() > 0) {
+
+      // read the bytes incoming from the client:
+      char thisChar = client.read();
+      // echo the bytes back to the client:
+      wifiServer.write("T");//thisChar);
+      // echo the bytes to the server as well:
+      Serial.write(thisChar);
+    }
+    /*while (client.connected()) {
+      while (client.available()>0) {
+        Serial.write("Client availiable: " + client.available());
+        //char c = "TEST";//client.read();
+        client.write("TEST");
+
+      }
+
+      delay(10);
+    }
+
+    client.stop();
+    Serial.println("Client disconnected");*/
+
+  /*} else{
+    Serial.println("wait for clients");
+    alreadyConnected = false;
+    delay(1000);
+  }*/
+  }
+}

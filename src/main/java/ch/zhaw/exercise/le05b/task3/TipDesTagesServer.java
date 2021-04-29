@@ -13,14 +13,17 @@ public class TipDesTagesServer {
             "Vielleicht wollen Sie doch noch mal über diesen Haarschnitt nachdenken."};
 
     public void los() {
-        try (
-                ServerSocket serverSock = new ServerSocket(4242)) {
+        //Server Server-Socket erzeugen:
+        try (ServerSocket serverSock = new ServerSocket(4242)) {
             while (true) {
-                Socket sock = serverSock.accept();
-                PrintWriter writer = new PrintWriter(sock.getOutputStream());
+                //Client-Verbindungsanfrage bearbeiten, Socket-Verbindung zum Client erstellen/akzeptieren
+                Socket clientSocket = serverSock.accept();
+                //in Socket schreiben
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
                 String tipp = getTipp();
                 writer.println(tipp);
-                writer.close();System.out.println(tipp);
+                writer.close();
+                System.out.println(tipp);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

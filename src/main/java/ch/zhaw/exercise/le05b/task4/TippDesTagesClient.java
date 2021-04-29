@@ -8,9 +8,12 @@ import java.net.Socket;
 public class TippDesTagesClient {
 
     public void los() {
+        //Client Socket erzeugen, incl. Verbindungsanfrage
         try (Socket s = new Socket("127.0.0.1", 4242)) {
+            //vom Socket lesen
             InputStreamReader streamReader = new InputStreamReader(s.getInputStream());
             BufferedReader reader = new BufferedReader(streamReader);
+            //Meldung lesen
             String advice = reader.readLine();
             System.out.println("Ratschlag fuer heute: " + advice);
             reader.close();

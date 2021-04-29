@@ -14,7 +14,13 @@ public class TwoThredsTestR {
     class MySimpleRun implements Runnable {
         public void run() {
             for (int i = 0; i < 10; i++) {
-                System.out.println(i + " " + Thread.currentThread().getName());
+                long aktuelleZeit = System.currentTimeMillis();
+                long millis = aktuelleZeit % 1000;
+                long second = (aktuelleZeit / 1000) % 60;
+                long minute = (aktuelleZeit / (1000 * 60)) % 60;
+                long hour = (aktuelleZeit / (1000 * 60 * 60)) % 24;
+                String time = String.format("%02d:%02d:%02d.%d", hour, minute, second, millis);
+                System.out.println(time + ": " + i + " " + Thread.currentThread().getName());
                 Thread.yield();
             }
             System.out.println("DONE! " + Thread.currentThread().getName());

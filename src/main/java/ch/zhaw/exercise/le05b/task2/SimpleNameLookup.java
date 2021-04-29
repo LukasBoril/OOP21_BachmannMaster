@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 
 public class SimpleNameLookup {
     public static void main(String[] args) {
-        String[] hosts = {"www.zhaw.ch", "www.sbb.ch"};
+        String[] hosts = {"www.zhaw.ch", "www.fcgw.ch"};
         for (String host : hosts) {
             try {
                 System.out.println(host + ":");
