@@ -12,7 +12,7 @@ public class PrintStringToFile {
         File file = new File("src/main/java/ch/zhaw/exercise/le05a/task1d/datei.txt");
         long start=0;
         // Append flag is set to true
-        try (FileWriter fw = new FileWriter(file, false);
+        try (FileWriter fw = new FileWriter(file, false); //Append: File wird ergänzt oder ersetzt
              PrintWriter out = new PrintWriter(fw)) {
 
             start = System.currentTimeMillis();
