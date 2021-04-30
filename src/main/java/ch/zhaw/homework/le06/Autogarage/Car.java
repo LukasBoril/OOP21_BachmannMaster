@@ -23,12 +23,14 @@ public class Car extends Thread
                 Thread.sleep((int) (Math.random()*10000));
             } catch (InterruptedException e) {
             }
-            garage.enter(this);
+            boolean geparkt = garage.enter(this);
             try {
                 Thread.sleep((int) (Math.random()*10000));
             } catch (InterruptedException e) {
             }
-            garage.leave(this);
+            if (geparkt) {
+                garage.leave(this);
+            }
         }
     }
 

@@ -24,7 +24,7 @@ public class ParkingGarage {
         return freeLotCounter;
     }
 
-    synchronized public void enter(Car car)
+    synchronized public boolean enter(Car car)
     {
         if (getNrOfFreeParkingLots()>0)
         {
@@ -34,14 +34,15 @@ public class ParkingGarage {
                 {
                     parkplaetze[i] = car;
                     printInfoEnter(car);
-                    return;
+                    return true;
                 }
             }
         }
         else {
             System.out.println("The garage is full. Thus, car " + car.getCarName() + " had to leave again");
-        }
 
+        }
+        return false;
     }
 
     synchronized public void leave(Car car)
