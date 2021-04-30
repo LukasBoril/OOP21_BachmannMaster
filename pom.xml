@@ -73,7 +73,11 @@
             <version>3.9.1</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.12.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
