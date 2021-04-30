@@ -3,8 +3,8 @@
 
 //example: https://techtutorialsx.com/2018/06/02/esp8266-arduino-socket-server/
 
-char ssid[]  = "Elegame24Ghz";
-char password[] = "G455m31-cm";
+char ssid[]  = "myNetzwerkname";
+char password[] = "myNetzwerkpassword";
 //create object to configure the socket server and to listen to connections from socket clients
 WiFiServer wifiServer(80);
 
