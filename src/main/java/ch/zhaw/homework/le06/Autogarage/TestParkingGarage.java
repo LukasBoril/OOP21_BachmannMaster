@@ -14,7 +14,7 @@ public class TestParkingGarage {
 
         p.enter(c1);
         p.enter(c2);
-        assert (p.getNrOfFreeParkingLots()==3);
+        assert p.getNrOfFreeParkingLots()==3;
         p.leave(c1);
         p.leave(c2);
 
