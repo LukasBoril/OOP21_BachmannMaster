@@ -2,16 +2,17 @@ package ch.zhaw.exercise.le04a.task3;
 
 import java.io.Serializable;
 
-public class Motor implements Serializable {
-    private static final long serialVersionUID= 1L;
-    private int hubraum;
+public class Motor  implements Serializable {
 
+	private static final long serialVersionUID = 1198855187409536290L;
 
-    public Motor(int hubraum) {
-        this.hubraum = hubraum;
-    }
-    public int getHubraum() {
-        return this.hubraum;
-    }
+	private int hubraum;
 
+	public Motor(int hubraum) {
+		this.hubraum = hubraum;
+	}
+
+	public int getHubraum() {
+		return hubraum;
+	}
 }

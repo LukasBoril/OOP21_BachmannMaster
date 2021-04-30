@@ -1,6 +1,6 @@
 package ch.zhaw.exercise.le04a.task2;
 
-import ch.zhaw.exercise.le04a.task3.Auto;
+import ch.zhaw.exercise.le04a.task1.Auto;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,16 +9,18 @@ import java.io.ObjectInputStream;
 
 public class AutoDeserialisieren {
 
-    public static void main(String[] args) {
-        try (InputStream fis = new FileInputStream("src/auto.ser");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-            Auto auto = (Auto) ois.readObject();
+	public static void main(String[] args) {
 
-            System.out.println("Farbe: " +auto.getFarbe());
-            System.out.println("Hubraum: " +auto.getMotor().getHubraum());
+		try (InputStream fis = new FileInputStream("src/auto.ser");
+				ObjectInputStream ois = new ObjectInputStream(fis)){
 
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+			Auto auto = (Auto) ois.readObject();
+
+			System.out.println("Farbe: " + auto.getFarbe());
+			System.out.println("Hubraum: " + auto.getMotor().getHubraum());
+			//System.out.println("Baujahr: " + auto.getBaujahr());
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 }

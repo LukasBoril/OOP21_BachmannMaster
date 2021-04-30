@@ -1,6 +1,7 @@
 package ch.zhaw.exercise.le03b.task1;
 
 class Catch {
+
     public static void main(String[] args){
         try {
             int i = Integer.parseInt(args[0]);

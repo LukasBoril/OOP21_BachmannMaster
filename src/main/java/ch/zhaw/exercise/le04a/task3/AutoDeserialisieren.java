@@ -7,16 +7,24 @@ import java.io.ObjectInputStream;
 
 public class AutoDeserialisieren {
 
-    public static void main(String[] args) {
-        try (InputStream fis = new FileInputStream("src/auto.ser");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-            Auto auto = (Auto) ois.readObject();
+	public static void main(String[] args) {
 
-            System.out.println("Farbe: " +auto.getFarbe());
-            System.out.println("Hubraum: " +auto.getMotor().getHubraum());
 
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+		try (InputStream fis = new FileInputStream("src/auto.ser");
+				ObjectInputStream ois = new ObjectInputStream(fis)){
+
+
+			Auto auto = (Auto) ois.readObject();
+
+			System.out.println("Farbe: " + auto.getFarbe());
+			System.out.println("Hubraum: " + auto.getMotor().getHubraum());
+		    System.out.println("Nummer: " + auto.getNummer());
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+	}
 }

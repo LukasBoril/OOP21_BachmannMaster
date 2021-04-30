@@ -1,19 +1,26 @@
 package ch.zhaw.exercise.le04a.task3;
 
-public class Fahrzeug {
+import java.io.Serializable;
 
-    private String number;
+public class Fahrzeug  implements Serializable { //ohne Serializable wird Nummer nicht serialisiert
 
-    public Fahrzeug() {
+	private static final long serialVersionUID = 10000L;
 
-    }
-    public Fahrzeug(String number) {
-        this.number = number;
-    }
-    public String getNumber() {
-        return number;
-    }
-    public void setNumber(String number) {
-        this.number = number;
-    }
+	private String nummer;
+
+	// Variante 1
+	public Fahrzeug() {}
+
+	public Fahrzeug(String nummer) {
+	   this.nummer = nummer;
+	}
+
+	public String getNummer() {
+		return nummer;
+	}
+
+	public void setNummer(String nummer) {
+		this.nummer = nummer;
+	}
+
 }
