@@ -34,7 +34,7 @@ public class ProgressBarExample extends Application {
                 for (int i = 1; i <= 100; i++) {
                     updateProgress(i, 100);
                     updateMessage("Prozent: " + i);
-                    Thread.sleep(100);
+                    Thread.sleep(500);
                 }
                 return null;
             }
