@@ -1,8 +1,7 @@
-package ch.zhaw.eigeneProjekte.Modularbeit.V02;
+package ch.zhaw.eigeneProjekte.modularbeit.unitCodeArduino.V02;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class ConnectionScreen extends Application {
     private boolean deviceConnected;
@@ -28,7 +25,7 @@ public class ConnectionScreen extends Application {
 
     public void start(Stage primaryStage) {
         Label lblConnection = new Label("no connection");
-        TextField txtFIpAdress = new TextField("192.168.1.176");
+        TextField txtFIpAdress = new TextField("192.168.0.101");
 
         Button btnConnect = new Button("Connect...");
 

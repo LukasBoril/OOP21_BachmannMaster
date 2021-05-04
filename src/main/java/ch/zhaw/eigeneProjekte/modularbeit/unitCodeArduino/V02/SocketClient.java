@@ -1,4 +1,4 @@
-package ch.zhaw.eigeneProjekte.Modularbeit.V02;
+package ch.zhaw.eigeneProjekte.modularbeit.unitCodeArduino.V02;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package ch.zhaw.eigeneProjekte.Modularbeit.V00;
+package ch.zhaw.eigeneProjekte.modularbeit.unitCodeArduino.V00;
 
 import java.io.*;
 import java.net.Socket;
