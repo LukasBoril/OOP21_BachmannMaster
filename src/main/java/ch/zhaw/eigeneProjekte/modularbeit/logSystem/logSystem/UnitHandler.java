@@ -11,9 +11,11 @@ import java.util.HashSet;
  * @author M.Gasser
  * @version 1.000  04.05.2021
  */
-public class UnitHandler {
-    private static String pathToPackage = "src/main/java/ch.zhaw/eigeneProjekte/modularbeit/logSystem/files/";
-    private static File file = new File(pathToPackage + "MyUnits.txt");
+public class UnitHandler implements Serializable{
+    private static final long serialVersionID = 1L;
+
+    private static String pathToPackage = "src/main/java/ch/zhaw/eigeneProjekte/modularbeit/logSystem/files/";
+    private static File file = new File(pathToPackage + "MyUnits.ser");
 
 
     private ArrayList<LoggingUnit> myUnits;//HashSet<LoggingUnit> myUnits; eng_gam wieder auf HashSet zurücksetzen
@@ -30,7 +32,7 @@ public class UnitHandler {
      * @param  newUnit (as LoggingUnit)
      * @return  fullfilled (as boolean)
      */
-    public boolean addNUnit(LoggingUnit newUnit) {
+    public boolean addUnit(LoggingUnit newUnit) {
         if (newUnit != null){
             this.myUnits.add(newUnit);
             return true;
@@ -68,9 +70,10 @@ public class UnitHandler {
             try (OutputStream fos = new FileOutputStream(file);
                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
+                oos.writeObject(myUnits);
+
                 System.out.println("Following Objects got written into file:");
                 for (LoggingUnit oneUnit : myUnits) {
-                    oos.writeObject(oneUnit);
                     System.out.println(oneUnit.getUnitName());
                 }
 
@@ -88,16 +91,34 @@ public class UnitHandler {
         try (InputStream fis = new FileInputStream(file);
              ObjectInputStream ois = new ObjectInputStream(fis)){
 
+            myUnits.clear();
 
             myUnits = (ArrayList<LoggingUnit>) ois.readObject();
 
             System.out.println("Following Objects got read out of the file:");
             for (LoggingUnit oneUnit : myUnits) {
                 System.out.println(oneUnit.getUnitName());
+                oneUnit.disconnect();
             }
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
 
     }
+
+    /**
+     * Methode gives back the whole LoggingUnit-Object of the Unit that got asked for
+     * @param unitname (as String)
+     * @return null if it was not found / Unit-Object (as LoggingUnit) if it was found
+     */
+    public LoggingUnit getCertainUnit(String unitname) {
+
+        for (LoggingUnit oneUnit : myUnits) {
+            if (oneUnit.getUnitName().equals(unitname)) {
+                return oneUnit;
+            }
+        }
+        return null;
+    }
+
 }

@@ -2,25 +2,37 @@ package ch.zhaw.eigeneProjekte.modularbeit.logSystem.maingui;
 
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import ch.zhaw.eigeneProjekte.modularbeit.logSystem.logSystem.*;
 import ch.zhaw.eigeneProjekte.modularbeit.logSystem.units.*;
 
-public class MainGui extends Application {
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.List;
 
+public class MainGui extends Application {
+    LoggingUnit myChosenUnit;
+
+    //Constructor
+    public MainGui() {
+        myChosenUnit = null;
+    }
 
     //public static void main(String[] args) {
     //    launch(args);
@@ -29,44 +41,161 @@ public class MainGui extends Application {
     public void start(Stage primaryStage) {
         UnitHandler unitHandler = new UnitHandler();
 
-        ObservableList<LoggingUnit> obsUnits = FXCollections.observableList(new UnitHandler().getUnitSet());
-        ListView<LoggingUnit> listView = new ListView<>(obsUnits);
+
+        //ObservableList<LoggingUnit> obsUnits = FXCollections.observableList(unitHandler.getUnitSet());
+        //ListView<LoggingUnit> listView = new ListView<>(obsUnits);
+
+        ObservableList<String> obsUnits = FXCollections.observableArrayList();
+        for (LoggingUnit oneUnit : unitHandler.getUnitSet()) {
+            obsUnits.add(oneUnit.getUnitName());
+        }
+        ListView<String> unitlistView = new ListView<>(obsUnits);
+        unitlistView.setPrefWidth(600);
+
 
         Button btnNewUnit = new Button("Add new Unit");
+        btnNewUnit.setVisible(false);
 
         Button btnSaveUnits = new Button("Safe Units");
         Button btnRestorUnits = new Button("Restor Units");
 
 
-        String[] units = { "Arduino", "Raspberry"};
+        String[] units = { Units.ARDUINO.toString(), Units.RASPBERRY.toString()};
         ObservableList<String> diffUnits = FXCollections.observableArrayList(units);
-        ComboBox<String> comboUnits = new ComboBox<>(diffUnits);
+        ComboBox<String> comboVendorUnits = new ComboBox<>(diffUnits);
+
 
         TextField unitName = new TextField("unit-name");
-        TextField ipAdress = new TextField("ip-Adress");
+        unitName.setVisible(false);
+        TextField ipAdress1 = new TextField("192");
+        ipAdress1.setVisible(false);
+        TextField ipAdress2 = new TextField("168");
+        ipAdress2.setVisible(false);
+        TextField ipAdress3 = new TextField("x");
+        ipAdress3.setVisible(false);
+        TextField ipAdress4 = new TextField("x");
+        ipAdress4.setVisible(false);
+        HBox ipAdrHBox = new HBox(5);
+        ipAdrHBox.getChildren().addAll(ipAdress1, ipAdress2, ipAdress3, ipAdress4);
 
-        EventHandler newUnitEvent = new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (comboUnits.getSelectionModel().getSelectedItem() == "Arduino") {
-                    UnitArduino newUnit = new UnitArduino(unitName.getText());
-                    obsUnits.add(newUnit);
-                } else {
-                    UnitRaspberry newUnit = new UnitRaspberry(unitName.getText());
-                    obsUnits.add(newUnit);
+        TextField wifissid = new TextField("wifi-name");
+        wifissid.setVisible(false);
+        TextField wifipword = new TextField("wifi-password");
+        wifipword.setVisible(false);
+
+        Button btnConnect = new Button("Connect");
+        btnConnect.setVisible(false);
+        Circle connectionstate = new Circle(150, 135, 10, Color.GRAY);
+        connectionstate.setVisible(false);
+
+        EventHandler newUnitEvent = event -> {
+            String ipAdress = ipAdress1.getText() + "." + ipAdress2.getText() + "." +ipAdress4.getText() + "." +ipAdress4.getText();
+            InetAddress inetadr;
+            try {
+                inetadr = Inet4Address.getByName(ipAdress);
+                if (comboVendorUnits.getSelectionModel().getSelectedItem().equals(Units.ARDUINO.toString())) {
+                    UnitArduino newUnit = new UnitArduino(unitName.getText(),inetadr, wifissid.getText(), wifipword.getText());
+                    unitHandler.addUnit(newUnit);
+                    obsUnits.add(newUnit.getUnitName());
+                } else if(comboVendorUnits.getSelectionModel().getSelectedItem().equals(Units.RASPBERRY.toString()))  {
+                    UnitRaspberry newUnit = new UnitRaspberry(unitName.getText(),inetadr, wifissid.getText(), wifipword.getText());
+                    unitHandler.addUnit(newUnit);
+                    obsUnits.add(newUnit.getUnitName());
                 }
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
             }
         };
         btnNewUnit.setOnAction(newUnitEvent);
 
+
+        EventHandler<ActionEvent> unitVendorSelEvent = event -> {
+            if (comboVendorUnits.getSelectionModel().getSelectedItem() != null) {
+                unitName.setVisible(true);
+                btnNewUnit.setVisible(true);
+                ipAdress1.setVisible(true);
+                ipAdress2.setVisible(true);
+                ipAdress3.setVisible(true);
+                ipAdress4.setVisible(true);
+                wifissid.setVisible(true);
+                wifipword.setVisible(true);
+            } else {
+                unitName.setVisible(false);
+                btnNewUnit.setVisible(false);
+                ipAdress1.setVisible(false);
+                ipAdress2.setVisible(false);
+                ipAdress3.setVisible(false);
+                ipAdress4.setVisible(false);
+                wifissid.setVisible(false);
+                wifipword.setVisible(false);
+            }
+        };
+        comboVendorUnits.addEventHandler(ActionEvent.ACTION, unitVendorSelEvent);
+
         btnSaveUnits.setOnAction(event -> unitHandler.writeUnitsIntoFile());
-        btnRestorUnits.setOnAction(event -> unitHandler.readUnitsOfFile());
+        btnRestorUnits.setOnAction(event -> {
+
+            unitHandler.readUnitsOfFile();
+            obsUnits.clear();
+            for (LoggingUnit oneUnit : unitHandler.getUnitSet()) {
+                obsUnits.add(oneUnit.getUnitName());
+            }
+        });
+
+
+        unitlistView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+            System.out.println("Selected item: " + newValue);
+            if (newValue != null) {
+                btnConnect.setVisible(true);
+                connectionstate.setVisible(true);
+                myChosenUnit = unitHandler.getCertainUnit(newValue);
+                if (myChosenUnit.isConnected()) {
+                    connectionstate.setFill(Color.GREEN);
+                    btnConnect.setText("disconnect");
+                } else {
+                    connectionstate.setFill(Color.RED);
+                    btnConnect.setText("connect");
+                }
+            } else {
+                btnConnect.setVisible(false);
+                connectionstate.setVisible(false);
+                myChosenUnit = null;
+            }
+
+        });
+
+        btnConnect.setOnAction(event -> {
+            if (myChosenUnit != null) {
+                if (!myChosenUnit.isConnected()) {
+                    //connect
+                    if (myChosenUnit.connect()) {
+                        connectionstate.setFill(Color.GREEN);
+                        btnConnect.setText("disconnect");
+                    } else {
+                        connectionstate.setFill(Color.RED);
+                    }
+                } else {
+                    //disconnect
+                    if (myChosenUnit.disconnect()) {
+                        connectionstate.setFill(Color.GREEN);
+                    } else {
+                        connectionstate.setFill(Color.RED);
+                        btnConnect.setText("connect");
+                    }
+                }
+            }
+
+        });
+
+        HBox hBoxConnect = new HBox(8);
+        hBoxConnect.getChildren().addAll(connectionstate,btnConnect);
 
         VBox vBoxleft = new VBox(8);
-        vBoxleft.getChildren().addAll(btnNewUnit, listView, btnSaveUnits, btnRestorUnits);
+        vBoxleft.getChildren().addAll(btnNewUnit, unitlistView, hBoxConnect, btnSaveUnits, btnRestorUnits);
 
         VBox vBoxright = new VBox(8);
-        vBoxright.getChildren().addAll(comboUnits,unitName, ipAdress);
+        vBoxright.getChildren().addAll(comboVendorUnits,unitName, ipAdrHBox, wifissid, wifipword);
 
         HBox hBox = new HBox(8);
         hBox.getChildren().addAll(vBoxleft,vBoxright);
