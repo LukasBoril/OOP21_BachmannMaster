@@ -3,7 +3,7 @@ package ch.zhaw.eigeneProjekte.modularbeit.logSystem.logSystem;
 import java.net.InetAddress;
 
 /**
- * This Interface shold be implemented into those Units that shall be able to connect with Wifi.
+ * This Interface shold be implemented into those EnumUnits that shall be able to connect with Wifi.
  * @author M.Gasser
  * @version 1.000  05.05.2021
  */

@@ -6,8 +6,8 @@ import java.util.HashSet;
 
 
 /**
- * This Class holds all the added Units and gives methodes to add/ remove a certain Unit.
- * Also it reads/writes the holded Units into a Project file if asked for.
+ * This Class holds all the added EnumUnits and gives methodes to add/ remove a certain Unit.
+ * Also it reads/writes the holded EnumUnits into a Project file if asked for.
  * @author M.Gasser
  * @version 1.000  04.05.2021
  */
@@ -62,7 +62,7 @@ public class UnitHandler implements Serializable{
     }
 
     /**
-     * Methode writes all the Units of the HashSet into a file, to be able to restore it sometime later.
+     * Methode writes all the EnumUnits of the HashSet into a file, to be able to restore it sometime later.
      */
     public void writeUnitsIntoFile() {
 
@@ -84,7 +84,7 @@ public class UnitHandler implements Serializable{
     }
 
     /**
-     * Methode reads all the Units out of the file and restores the HashSet with it.
+     * Methode reads all the EnumUnits out of the file and restores the HashSet with it.
      */
     public void readUnitsOfFile() {
 

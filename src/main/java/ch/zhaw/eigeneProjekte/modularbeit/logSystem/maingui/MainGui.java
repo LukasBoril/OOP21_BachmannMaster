@@ -2,13 +2,9 @@ package ch.zhaw.eigeneProjekte.modularbeit.logSystem.maingui;
 
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,7 +20,6 @@ import ch.zhaw.eigeneProjekte.modularbeit.logSystem.units.*;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
 
 public class MainGui extends Application {
     LoggingUnit myChosenUnit;
@@ -60,7 +55,7 @@ public class MainGui extends Application {
         Button btnRestorUnits = new Button("Restor Units");
 
 
-        String[] units = { Units.ARDUINO.toString(), Units.RASPBERRY.toString()};
+        String[] units = { EnumUnits.ARDUINO.toString(), EnumUnits.RASPBERRY.toString()};
         ObservableList<String> diffUnits = FXCollections.observableArrayList(units);
         ComboBox<String> comboVendorUnits = new ComboBox<>(diffUnits);
 
@@ -89,15 +84,15 @@ public class MainGui extends Application {
         connectionstate.setVisible(false);
 
         EventHandler newUnitEvent = event -> {
-            String ipAdress = ipAdress1.getText() + "." + ipAdress2.getText() + "." +ipAdress4.getText() + "." +ipAdress4.getText();
+            String ipAdress = ipAdress1.getText() + "." + ipAdress2.getText() + "." +ipAdress3.getText() + "." +ipAdress4.getText();
             InetAddress inetadr;
             try {
                 inetadr = Inet4Address.getByName(ipAdress);
-                if (comboVendorUnits.getSelectionModel().getSelectedItem().equals(Units.ARDUINO.toString())) {
+                if (comboVendorUnits.getSelectionModel().getSelectedItem().equals(EnumUnits.ARDUINO.toString())) {
                     UnitArduino newUnit = new UnitArduino(unitName.getText(),inetadr, wifissid.getText(), wifipword.getText());
                     unitHandler.addUnit(newUnit);
                     obsUnits.add(newUnit.getUnitName());
-                } else if(comboVendorUnits.getSelectionModel().getSelectedItem().equals(Units.RASPBERRY.toString()))  {
+                } else if(comboVendorUnits.getSelectionModel().getSelectedItem().equals(EnumUnits.RASPBERRY.toString()))  {
                     UnitRaspberry newUnit = new UnitRaspberry(unitName.getText(),inetadr, wifissid.getText(), wifipword.getText());
                     unitHandler.addUnit(newUnit);
                     obsUnits.add(newUnit.getUnitName());
