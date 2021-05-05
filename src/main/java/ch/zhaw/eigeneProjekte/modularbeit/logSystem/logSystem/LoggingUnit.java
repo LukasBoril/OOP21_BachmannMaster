@@ -1,10 +1,9 @@
 package ch.zhaw.eigeneProjekte.modularbeit.logSystem.logSystem;
 
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
-import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -23,6 +22,8 @@ public abstract class LoggingUnit implements Serializable {
     private boolean connected;
 
     private Socket clientSocket;
+    private PrintWriter writer;
+    private InputStreamReader streamReader;
 
     //Constructor
     public LoggingUnit(String unitName) {
@@ -61,7 +62,8 @@ public abstract class LoggingUnit implements Serializable {
         if (!isConnected()) {
             //Client Socket erzeugen, incl. Verbindungsanfrage
             try {
-                clientSocket = new Socket("192.168.0.102",80);//getIpAdress().toString(), serverPortNumber);
+                System.out.println("Try to connect to Server at IP-Adress: " + getIpAdress().toString().substring(1));
+                clientSocket = new Socket(getIpAdress().toString().substring(1), serverPortNumber); //"192.168.0.102",80);
                 setConnectionState(clientSocket.isBound() && !clientSocket.isClosed());
                 System.out.println("Connectionstate of Connect: " + isConnected());
             } catch (UnknownHostException e) {
@@ -75,11 +77,13 @@ public abstract class LoggingUnit implements Serializable {
 
     /**
      * Methode disconnects the connection to the Unit
-     * @return connectionstate true=connected / false=disconnected (as boolean)
+     * @return connectionstate: true=connected / false=disconnected (as boolean)
      */
     public boolean disconnect() {
         if (isConnected()) {
             try{
+                //writer.close();
+                //reader.close();
                 clientSocket.close();
                 setConnectionState(!clientSocket.isClosed());
                 System.out.println("Connectionstate of Connect: " + isConnected());
@@ -88,6 +92,54 @@ public abstract class LoggingUnit implements Serializable {
             }
         }
         return isConnected();
+    }
+
+    /**
+     * Methode sends a command number to the Unit
+     * @param commandNo that has to be sent to the unit (as int)
+     * @return writer state: true=all allright / false=Error occured or not unit connected (as boolean)
+     */
+    public boolean sendCommand(int commandNo) {
+        if (isConnected()) {
+            //in Socket schreiben
+            try {
+                writer = new PrintWriter(clientSocket.getOutputStream());
+                writer.println(commandNo);
+                //writer.close();
+                System.out.println("Kommando an Server gesendet: " + commandNo);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                System.out.println("Error? " + writer.checkError());
+                return !writer.checkError();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Methode reads the feedback of a command, after a command has been sent to the Unit
+     * @return writer state: true=all allright / false=Error occured or not unit connected (as boolean)
+     */
+    public int readCommandFeedback() {
+        int feedback = -1;
+
+        if (isConnected()) {
+            //in Socket schreiben
+            try {
+                streamReader = new InputStreamReader(clientSocket.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                //Meldung lesen
+                feedback = (int)reader.read();
+                //reader.close();
+                System.out.println("Feedback von Server bekommen: " + feedback);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                return feedback;
+            }
+        }
+        return feedback;
     }
 
     /*

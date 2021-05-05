@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -45,7 +46,7 @@ public class MainGui extends Application {
             obsUnits.add(oneUnit.getUnitName());
         }
         ListView<String> unitlistView = new ListView<>(obsUnits);
-        unitlistView.setPrefWidth(600);
+        unitlistView.setPrefWidth(800);
 
 
         Button btnNewUnit = new Button("Add new Unit");
@@ -83,6 +84,16 @@ public class MainGui extends Application {
         Circle connectionstate = new Circle(150, 135, 10, Color.GRAY);
         connectionstate.setVisible(false);
 
+        Button btnSendComand1 = new Button("Comand1");
+        btnSendComand1.setVisible(false);
+        Button btnSendComand2 = new Button("Comand2");
+        btnSendComand2.setVisible(false);
+        Button btnSendComand3 = new Button("Comand3");
+        btnSendComand3.setVisible(false);
+        Label lblFeedback = new Label("---");
+        lblFeedback.setVisible(false);
+
+        //Action if the Button to "add new Unit" gets pressed (a new LoggingUnit gets created and displayed into the ListView)
         EventHandler newUnitEvent = event -> {
             String ipAdress = ipAdress1.getText() + "." + ipAdress2.getText() + "." +ipAdress3.getText() + "." +ipAdress4.getText();
             InetAddress inetadr;
@@ -103,7 +114,7 @@ public class MainGui extends Application {
         };
         btnNewUnit.setOnAction(newUnitEvent);
 
-
+        //Action if a Vendor gets selected (Display the "Add Unit-Button" and display all the Textfields for a new Unit)
         EventHandler<ActionEvent> unitVendorSelEvent = event -> {
             if (comboVendorUnits.getSelectionModel().getSelectedItem() != null) {
                 unitName.setVisible(true);
@@ -127,9 +138,11 @@ public class MainGui extends Application {
         };
         comboVendorUnits.addEventHandler(ActionEvent.ACTION, unitVendorSelEvent);
 
+        //Action if the "Safe Units" button gets pressed (serialise all Units in the ListView)
         btnSaveUnits.setOnAction(event -> unitHandler.writeUnitsIntoFile());
-        btnRestorUnits.setOnAction(event -> {
 
+        //Action if the "Restore Units" button gets pressed (deserialise all Units and display it on the ListView)
+        btnRestorUnits.setOnAction(event -> {
             unitHandler.readUnitsOfFile();
             obsUnits.clear();
             for (LoggingUnit oneUnit : unitHandler.getUnitSet()) {
@@ -137,9 +150,8 @@ public class MainGui extends Application {
             }
         });
 
-
+        //Action if an Unit gets selected in the ListView (Connectionstate and Button gets displayed)
         unitlistView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
             System.out.println("Selected item: " + newValue);
             if (newValue != null) {
                 btnConnect.setVisible(true);
@@ -157,9 +169,9 @@ public class MainGui extends Application {
                 connectionstate.setVisible(false);
                 myChosenUnit = null;
             }
-
         });
 
+        //Action if the "Connect-button" gets pressed (connect or disconnect will be performed)
         btnConnect.setOnAction(event -> {
             if (myChosenUnit != null) {
                 if (!myChosenUnit.isConnected()) {
@@ -167,6 +179,10 @@ public class MainGui extends Application {
                     if (myChosenUnit.connect()) {
                         connectionstate.setFill(Color.GREEN);
                         btnConnect.setText("disconnect");
+                        btnSendComand1.setVisible(true);
+                        btnSendComand2.setVisible(true);
+                        btnSendComand3.setVisible(true);
+                        lblFeedback.setVisible(true);
                     } else {
                         connectionstate.setFill(Color.RED);
                     }
@@ -177,88 +193,52 @@ public class MainGui extends Application {
                     } else {
                         connectionstate.setFill(Color.RED);
                         btnConnect.setText("connect");
+                        btnSendComand1.setVisible(false);
+                        btnSendComand2.setVisible(false);
+                        btnSendComand3.setVisible(false);
+                        lblFeedback.setVisible(false);
+                        lblFeedback.setText("---");
                     }
                 }
             }
+        });
 
+        //Action of the "Comand-Buttons"
+        btnSendComand1.setOnAction(event -> {
+            if (myChosenUnit != null && myChosenUnit.isConnected()) {
+                myChosenUnit.sendCommand(1);
+                String str = Integer.toString(myChosenUnit.readCommandFeedback());
+                lblFeedback.setText(str);
+            }
+        });
+        btnSendComand2.setOnAction(event -> {
+            if (myChosenUnit != null && myChosenUnit.isConnected()) {
+                myChosenUnit.sendCommand(2);
+                String str = Integer.toString(myChosenUnit.readCommandFeedback());
+                lblFeedback.setText(str);
+            }
+        });
+        btnSendComand3.setOnAction(event -> {
+            if (myChosenUnit != null && myChosenUnit.isConnected()) {
+                myChosenUnit.sendCommand(3);
+                String str = Integer.toString(myChosenUnit.readCommandFeedback());
+                lblFeedback.setText(str);
+            }
         });
 
         HBox hBoxConnect = new HBox(8);
-        hBoxConnect.getChildren().addAll(connectionstate,btnConnect);
+        hBoxConnect.getChildren().addAll(connectionstate,btnConnect,btnSendComand1,btnSendComand2,btnSendComand3);
 
         VBox vBoxleft = new VBox(8);
-        vBoxleft.getChildren().addAll(btnNewUnit, unitlistView, hBoxConnect, btnSaveUnits, btnRestorUnits);
+        vBoxleft.getChildren().addAll(btnNewUnit, unitlistView, hBoxConnect, lblFeedback, btnSaveUnits, btnRestorUnits);
 
         VBox vBoxright = new VBox(8);
         vBoxright.getChildren().addAll(comboVendorUnits,unitName, ipAdrHBox, wifissid, wifipword);
 
         HBox hBox = new HBox(8);
         hBox.getChildren().addAll(vBoxleft,vBoxright);
+        hBox.setPadding(new Insets(5));
 
-        /*Label lblConnection = new Label("no connection");
-        TextField txtFIpAdress = new TextField("192.168.0.101");
-
-        Button btnConnect = new Button("Connect...");
-
-        Button btnCommand1 = new Button("cmd 1");
-        Button btnCommand2 = new Button("cmd 2");
-        Button btnCommand3 = new Button("cmd 3");
-
-        Label lblFeedback = new Label(" --- ");
-
-        //Action of button Connect
-        btnConnect.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!deviceConnected) {
-                    device = new SocketClient();
-                    deviceConnected = device.connectDevice(txtFIpAdress.getText());
-                    System.out.println("Connectionstate of Connect: " + deviceConnected);
-                    if (deviceConnected) {
-                        lblConnection.setText("connected");
-                        btnConnect.setText("Disconnect...");
-                    };
-                } else {
-                    if (device != null) {
-                        deviceConnected = (!device.disconnectDevice());
-                        System.out.println("Connectionstate of disconnect: " + deviceConnected);
-                        if (!deviceConnected) {
-                            lblConnection.setText("no connection");
-                            btnConnect.setText("Connect...");
-                        };
-                    }
-                }
-            }
-        });
-
-        //Action of button Command's
-        btnCommand1.setOnAction(event -> {
-            if (device != null) {
-                device.sendCommand(1);
-                String str = Integer.toString(device.readCommand());
-                lblFeedback.setText(str);
-            }
-        });
-        btnCommand2.setOnAction(event -> {
-            if (device != null) {
-                device.sendCommand(2);
-                lblFeedback.setText(Integer.toString(device.readCommand()));
-            }
-        });
-        btnCommand3.setOnAction(event -> {
-            if (device != null) {
-                device.sendCommand(3);
-                lblFeedback.setText(Integer.toString(device.readCommand()));
-            }
-        });
-
-
-        HBox hbox = new HBox(8);
-        hbox.getChildren().addAll(btnCommand1,btnCommand2,btnCommand3);
-
-        VBox vbox = new VBox(8);
-        vbox.getChildren().addAll(lblConnection, txtFIpAdress, btnConnect,hbox, lblFeedback);
-*/
         Scene scene = new Scene(hBox, 600, 300);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Connect to Arduino!");
