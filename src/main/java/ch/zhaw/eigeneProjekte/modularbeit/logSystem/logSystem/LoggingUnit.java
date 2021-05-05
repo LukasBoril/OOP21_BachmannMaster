@@ -30,6 +30,8 @@ public abstract class LoggingUnit implements Serializable {
         this.unitName = unitName;
         this.connected = false;
         this.clientSocket = null;
+        this.writer = null;
+        this.streamReader = null;
     }
 
     /**
